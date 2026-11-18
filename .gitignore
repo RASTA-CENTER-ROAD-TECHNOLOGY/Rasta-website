@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.vercel/
+.env
+.env.*
+*.log
+RASTA _LIC_2026_PPT.pptx
