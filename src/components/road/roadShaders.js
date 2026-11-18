@@ -227,6 +227,93 @@ export function createPavementStandardMaterial(presetKey, repeatX = 4, repeatY =
 }
 
 /**
+ * Create dedicated PBR textured materials for highway bridge gantry, concrete barriers,
+ * galvanized railings, and overhead highway signage.
+ */
+export function createHighwayBridgeMaterials(maxAnisotropy = 4) {
+  const loader = new THREE.TextureLoader();
+  const disposables = [];
+
+  const loadTex = (url, isColor = false, repeatX = 1, repeatY = 1) => {
+    const tex = loader.load(url);
+    tex.wrapS = THREE.RepeatWrapping;
+    tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(repeatX, repeatY);
+    tex.anisotropy = maxAnisotropy;
+    if (isColor) {
+      tex.colorSpace = THREE.SRGBColorSpace;
+    }
+    disposables.push(tex);
+    return tex;
+  };
+
+  // 1. Concrete Parapet Barriers (Precast slipform with construction joints & aggregate)
+  const barrierConcrete = new THREE.MeshStandardMaterial({
+    name: 'Mat_Barrier_Concrete',
+    map: loadTex('/textures/barrier_concrete_diffuse.png', true, 2, 1),
+    bumpMap: loadTex('/textures/barrier_concrete_bump.png', false, 2, 1),
+    bumpScale: 0.045,
+    roughnessMap: loadTex('/textures/barrier_concrete_roughness.png', false, 2, 1),
+    roughness: 0.78,
+    metalness: 0.02,
+    envMapIntensity: 1.1,
+  });
+  disposables.push(barrierConcrete);
+
+  // 2. Galvanized Steel Railings (Hot-dip zinc crystal spangles & longitudinal brushed finish)
+  const galvanizedRail = new THREE.MeshStandardMaterial({
+    name: 'Mat_Galvanized_Rail',
+    map: loadTex('/textures/galvanized_rail_diffuse.png', true, 3, 2),
+    bumpMap: loadTex('/textures/galvanized_rail_bump.png', false, 3, 2),
+    bumpScale: 0.032,
+    roughnessMap: loadTex('/textures/galvanized_rail_roughness.png', false, 3, 2),
+    roughness: 0.3,
+    metalness: 0.9,
+    envMapIntensity: 1.55,
+  });
+  disposables.push(galvanizedRail);
+
+  // 3. Structural Navy Bridge Steel (Heavy girder plates, rivets, weld seams)
+  const bridgeSteel = new THREE.MeshStandardMaterial({
+    name: 'Mat_Steel_Navy',
+    map: loadTex('/textures/bridge_steel_diffuse.png', true, 2, 2),
+    bumpMap: loadTex('/textures/bridge_steel_bump.png', false, 2, 2),
+    bumpScale: 0.048,
+    roughnessMap: loadTex('/textures/bridge_steel_roughness.png', false, 2, 2),
+    roughness: 0.32,
+    metalness: 0.78,
+    envMapIntensity: 1.35,
+  });
+  disposables.push(bridgeSteel);
+
+  // 4. Overhead Highway Signage (Retro-reflective prismatic green face & borders)
+  const gantrySign = new THREE.MeshStandardMaterial({
+    name: 'Mat_Gantry_SignGreen',
+    map: loadTex('/textures/gantry_sign_diffuse.png', true, 1, 1),
+    bumpMap: loadTex('/textures/gantry_sign_bump.png', false, 1, 1),
+    bumpScale: 0.025,
+    roughness: 0.28,
+    metalness: 0.06,
+    envMapIntensity: 1.25,
+  });
+  disposables.push(gantrySign);
+
+  return {
+    barrierConcrete,
+    galvanizedRail,
+    bridgeSteel,
+    gantrySign,
+    dispose: () => {
+      disposables.forEach((item) => {
+        if (item && typeof item.dispose === 'function') {
+          item.dispose();
+        }
+      });
+    },
+  };
+}
+
+/**
  * Custom GLSL Fresnel + Precision Contour Shader overlay for inspecting
  * a selected structural stratum inside PavementStrata3DViewer.
  */

@@ -17,6 +17,7 @@ import {
   ESTEEMED_CLIENTS,
   FOUR_PILLARS,
   INSTITUTE_INFO,
+  PARTNER_LOGOS,
   WORKSHOPS_AND_EVENTS,
 } from '../data/rastaData';
 
@@ -131,9 +132,18 @@ export default function Home() {
 
   const partnerLoopItems = useMemo(
     () =>
-      ESTEEMED_CLIENTS.map((name) => ({
-        node: <span className="partner-loop-item">{name}</span>,
-        title: name,
+      PARTNER_LOGOS.map((partner) => ({
+        node: (
+          <div className="partner-logo-card" title={partner.name}>
+            <img
+              src={partner.src}
+              alt={partner.name}
+              className="partner-logo-img"
+              loading="lazy"
+            />
+          </div>
+        ),
+        title: partner.name,
       })),
     []
   );
@@ -250,13 +260,13 @@ export default function Home() {
               <span>Consultancy Services</span>
             </Link>
             <a
-              href="/RASTA_Complete_College_Brochure_2026.pdf"
+              href="/RASTA_Consultancy_Brochure_2025.pdf"
               target="_blank"
               rel="noreferrer"
               className="btn btn--secondary"
             >
               <Download size={16} strokeWidth={1.8} />
-              <span>Download Brochure PDF</span>
+              <span>Consultancy Brochure</span>
             </a>
           </div>
 
@@ -491,10 +501,10 @@ export default function Home() {
         </div>
         <LogoLoop
           logos={partnerLoopItems}
-          speed={65}
+          speed={60}
           direction="left"
-          logoHeight={24}
-          gap={40}
+          logoHeight={48}
+          gap={36}
           pauseOnHover={true}
           fadeOut={true}
           draggable={true}

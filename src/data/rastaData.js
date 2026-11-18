@@ -345,20 +345,18 @@ export const FACULTY_ROSTER = {
   ],
   teaching: [
     { name: 'Dr. K. M. Mallesha', division: 'Highway Technology Division', role: 'Professor', email: 'kmm@rastaindia.com' },
-    { name: 'Dr. M. A. Jayaram', division: 'Infrastructure Engineering & Management Division', role: 'Professor (37 yrs academic, 20 yrs research)', email: 'jayaram@rastaindia.com' },
+    { name: 'Dr. M. A. Jayaram', division: 'Infrastructure Engineering & Management Division', role: 'Professor', email: 'jayaram@rastaindia.com' },
     { name: 'Dr. Jaya R.', division: 'Highway Technology Division', role: 'Associate Professor', email: 'jayars@rastaindia.com' },
     { name: 'Dhruva Theja', division: 'Highway Technology Division', role: 'Assistant Professor', email: '' },
     { name: 'Reshma E. K.', division: 'Highway Technology Division', role: 'Assistant Professor', email: '' },
   ],
   guestFaculty: [
     { name: 'Dr. Gangaboraiah', role: 'Guest Faculty Professor' },
-    { name: 'Mr. Nagesh', role: 'Guest Faculty - Industry Expert' },
-    { name: 'Dr. Ajay N.', role: 'Guest Faculty - Industry Expert' },
+    { name: 'Mr. Arunkumar Shambu', role: 'Guest Faculty - Industry Expert' },
   ],
   supportStaff: [
     { name: 'Mrs. Jayanthi Manoj', role: 'Accounts', contact: '+91 99166 82206 | accounts@rastaindia.com' },
     { name: 'Mrs. Laxmi C. Naik', role: 'General Information', contact: '+91 96063 26161' },
-    { name: 'Mrs. Neha Shetty', role: 'Marketing and Admin', contact: 'nehashetty@rastaindia.com' },
     { name: 'Mr. Francis Domello', role: 'Lab Technician', contact: 'francisdomelo@gmail.com' },
     { name: 'Mr. H. S. Sudhakar', role: 'Lab Technician', contact: 'sudhakar4rasta@gmail.com' },
     { name: 'Mr. Shankarappa', role: 'Lab Technician', contact: '' },
@@ -1037,6 +1035,26 @@ export const ESTEEMED_CLIENTS = [
   'MGNREGA',
   'Bengaluru Smart City',
   'Karnataka State Highways Improvement Project (KSHIP)',
+];
+
+export const PARTNER_LOGOS = [
+  { name: 'Larsen & Toubro (L&T)', src: '/logos/lt.png' },
+  { name: 'Volvo India Private Limited', src: '/logos/volvo.png' },
+  { name: 'UltraTech Cement', src: '/logos/ultratech.webp' },
+  { name: 'Kempegowda International Airport Bengaluru (BIAL)', src: '/logos/bial.png' },
+  { name: 'Bengaluru Metro Rail Corporation Limited (Namma Metro)', src: '/logos/namma-metro.png' },
+  { name: 'Toyota Motors', src: '/logos/toyota.png' },
+  { name: 'Public Works Department (PWD Karnataka)', src: '/logos/pwd.png' },
+  { name: 'GMR Group', src: '/logos/gmr-group.svg' },
+  { name: 'Bruhat Bengaluru Mahanagara Palike (BBMP)', src: '/logos/bbmp.png' },
+  { name: 'Bengaluru Traffic Police', src: '/logos/bengaluru-traffic-police.png' },
+  { name: 'Saint-Gobain', src: '/logos/saint-gobain.webp' },
+  { name: 'Karnataka Industrial Area Development Board (KIADB)', src: '/logos/kiadb.png' },
+  { name: 'Karnataka Rural Infrastructure Development Limited (KRIDL)', src: '/logos/kridl.png' },
+  { name: 'Karnataka Rural Road Development Agency (KRRDA)', src: '/logos/krrda.png' },
+  { name: 'Rural Development & Panchayat Raj (RDPR)', src: '/logos/rdpr_logo.png' },
+  { name: 'EI Technologies (A Cognizant Company)', src: '/logos/ei-technologies.png' },
+  { name: 'Consulting Engineering Services (CES)', src: '/logos/ces.svg' },
 ];
 
 export const ALUMNI_STORIES = [

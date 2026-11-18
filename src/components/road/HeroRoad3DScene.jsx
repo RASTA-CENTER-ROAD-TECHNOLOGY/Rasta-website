@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import gsap from 'gsap';
-import { createStudioEnvironment } from './roadShaders';
+import { createStudioEnvironment, createHighwayBridgeMaterials } from './roadShaders';
 
 const VEHICLE_EXPLODE_OFFSETS = {
   Layer_01_Subgrade: -0.88,
@@ -91,7 +91,7 @@ const getEffectiveTarget = (modeObj, w) => {
   return { ...modeObj.camTarget };
 };
 
-function createProceduralFallbackGroup() {
+function createProceduralFallbackGroup(bridgeMaterials) {
   const group = new THREE.Group();
   const makeBox = (name, w, h, d, y, colorHex, roughness = 0.7) => {
     const geom = new THREE.BoxGeometry(w, h, d);
@@ -113,22 +113,57 @@ function createProceduralFallbackGroup() {
 
   const barriersGroup = new THREE.Group();
   barriersGroup.name = 'Highway_Barriers';
-  const concreteMat = new THREE.MeshStandardMaterial({ color: 0xc2c6cc, roughness: 0.72 });
+  const concreteMat = bridgeMaterials ? bridgeMaterials.barrierConcrete : new THREE.MeshStandardMaterial({ color: 0xc2c6cc, roughness: 0.72 });
+  const railMat = bridgeMaterials ? bridgeMaterials.galvanizedRail : new THREE.MeshStandardMaterial({ color: 0xd8dde4, metalness: 0.88, roughness: 0.3 });
+
   [-2.44, 2.44].forEach((z) => {
     const wall = new THREE.Mesh(new THREE.BoxGeometry(11.6, 0.54, 0.28), concreteMat);
     wall.position.set(0, 0.52, z);
     wall.castShadow = true;
+    wall.receiveShadow = true;
     barriersGroup.add(wall);
+
+    const railGeom = new THREE.BoxGeometry(11.6, 0.06, 0.05);
+    const railTop = new THREE.Mesh(railGeom, railMat);
+    railTop.position.set(0, 0.88, z);
+    railTop.castShadow = true;
+    barriersGroup.add(railTop);
+
+    const railMid = new THREE.Mesh(railGeom, railMat);
+    railMid.position.set(0, 0.74, z);
+    railMid.castShadow = true;
+    barriersGroup.add(railMid);
+
+    for (let x = -5.0; x <= 5.0; x += 1.45) {
+      const post = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.36, 0.06), railMat);
+      post.position.set(x, 0.76, z);
+      post.castShadow = true;
+      barriersGroup.add(post);
+    }
   });
   group.add(barriersGroup);
 
   const gantryGroup = new THREE.Group();
   gantryGroup.name = 'FWD_Sensor_Rig';
-  const navyMat = new THREE.MeshStandardMaterial({ color: 0x0a2b5c, roughness: 0.28, metalness: 0.76 });
-  const beam = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.24, 4.78), navyMat);
-  beam.position.set(0, 1.98, 0);
+  const navyMat = bridgeMaterials ? bridgeMaterials.bridgeSteel : new THREE.MeshStandardMaterial({ color: 0x0a2b5c, roughness: 0.28, metalness: 0.76 });
+  const beam = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.32, 5.1), navyMat);
+  beam.position.set(0, 2.08, 0);
   beam.castShadow = true;
   gantryGroup.add(beam);
+
+  [-2.52, 2.52].forEach((z) => {
+    const col = new THREE.Mesh(new THREE.BoxGeometry(0.34, 2.08, 0.34), navyMat);
+    col.position.set(0, 1.04, z);
+    col.castShadow = true;
+    gantryGroup.add(col);
+  });
+
+  if (bridgeMaterials?.gantrySign) {
+    const signMesh = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.9, 2.0), bridgeMaterials.gantrySign);
+    signMesh.position.set(0.24, 2.38, -0.6);
+    signMesh.castShadow = true;
+    gantryGroup.add(signMesh);
+  }
   group.add(gantryGroup);
 
   const fallbackVehicles = [
@@ -160,7 +195,6 @@ export default function HeroRoad3DScene() {
   const canvasHostRef = useRef(null);
   const [viewMode, setViewMode] = useState('assembled');
   const [webglReady, setWebglReady] = useState(true);
-  const [modelSource, setModelSource] = useState('Blender 5.1 Embedded PBR + Live 3D Traffic');
 
   const sceneApiRef = useRef(null);
 
@@ -193,7 +227,7 @@ export default function HeroRoad3DScene() {
     const maxAnisotropy = Math.min(renderer.capabilities.getMaxAnisotropy() || 4, 8);
 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isNarrowViewport ? 1.5 : 2));
-    renderer.setSize(width, height);
+    renderer.setSize(width, height, false);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -275,6 +309,8 @@ export default function HeroRoad3DScene() {
     const rootPivot = new THREE.Group();
     scene.add(rootPivot);
 
+    const bridgeMaterials = createHighwayBridgeMaterials(maxAnisotropy);
+
     const modelHolder = new THREE.Group();
     rootPivot.add(modelHolder);
 
@@ -295,6 +331,24 @@ export default function HeroRoad3DScene() {
       mat.needsUpdate = true;
     };
 
+    const resolveMaterial = (mat) => {
+      if (!mat) return mat;
+      if (mat.name === 'Mat_Barrier_Concrete') {
+        return bridgeMaterials.barrierConcrete;
+      }
+      if (mat.name === 'Mat_Galvanized_Rail') {
+        return bridgeMaterials.galvanizedRail;
+      }
+      if (mat.name === 'Mat_Steel_Navy') {
+        return bridgeMaterials.bridgeSteel;
+      }
+      if (mat.name === 'Mat_Gantry_SignGreen') {
+        return bridgeMaterials.gantrySign;
+      }
+      enhanceMaterialTextures(mat);
+      return mat;
+    };
+
     const registerModelTree = (tree) => {
       modelHolder.clear();
       namedLayers.clear();
@@ -305,9 +359,9 @@ export default function HeroRoad3DScene() {
           child.castShadow = true;
           child.receiveShadow = true;
           if (Array.isArray(child.material)) {
-            child.material.forEach(enhanceMaterialTextures);
+            child.material = child.material.map(resolveMaterial);
           } else {
-            enhanceMaterialTextures(child.material);
+            child.material = resolveMaterial(child.material);
           }
         }
         if (child.name && Object.prototype.hasOwnProperty.call(layerOffsets, child.name)) {
@@ -331,7 +385,7 @@ export default function HeroRoad3DScene() {
       modelHolder.add(tree);
     };
 
-    registerModelTree(createProceduralFallbackGroup());
+    registerModelTree(createProceduralFallbackGroup(bridgeMaterials));
 
     const loader = new GLTFLoader();
     let active = true;
@@ -340,7 +394,6 @@ export default function HeroRoad3DScene() {
       (gltf) => {
         if (!active || !gltf?.scene) return;
         registerModelTree(gltf.scene);
-        setModelSource('Blender 5.1 Embedded PBR + Live 3D Traffic');
       },
       undefined,
       () => {
@@ -504,7 +557,9 @@ export default function HeroRoad3DScene() {
       );
       camTarget.set(nextTarget.x, nextTarget.y, nextTarget.z);
       camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
+      renderer.setSize(w, h, false);
+      renderer.domElement.style.width = '100%';
+      renderer.domElement.style.height = '100%';
       renderer.render(scene, camera);
     });
     resizeObserver.observe(host);
@@ -522,6 +577,7 @@ export default function HeroRoad3DScene() {
       host.removeEventListener('pointerleave', onPointerLeave);
       ctx.revert();
       envRT.dispose();
+      bridgeMaterials.dispose();
       scene.traverse((obj) => {
         if (obj.geometry) obj.geometry.dispose();
         if (obj.material) {
@@ -577,7 +633,6 @@ export default function HeroRoad3DScene() {
             ))}
           </div>
           <div className="hero-3d-telemetry">
-            <span className="hero-3d-source">{modelSource}</span>
             <span>{activeConfig.telemetry}</span>
           </div>
         </div>

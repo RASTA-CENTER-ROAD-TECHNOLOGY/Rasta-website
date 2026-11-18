@@ -189,7 +189,7 @@ export default function AppSidebar() {
                 <SidebarMenuButton
                   render={
                     <a
-                      href="/RASTA_Complete_College_Brochure_2026.pdf"
+                      href="/RASTA_Academic_Brochure.pdf"
                       target="_blank"
                       rel="noreferrer"
                       onClick={closeDrawer}
@@ -197,7 +197,22 @@ export default function AppSidebar() {
                   }
                 >
                   <FileText size={16} strokeWidth={1.8} />
-                  <span>College Brochure PDF</span>
+                  <span>Academic Brochure PDF</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  render={
+                    <a
+                      href="/RASTA_Consultancy_Brochure_2025.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={closeDrawer}
+                    />
+                  }
+                >
+                  <FileText size={16} strokeWidth={1.8} />
+                  <span>Consultancy Brochure PDF</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

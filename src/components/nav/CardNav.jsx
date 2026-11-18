@@ -186,7 +186,7 @@ const CardNav = ({
     '--cn-inset': '8px',
     '--cn-gap': '10px',
     '--cn-radius': '0px',
-    '--cn-logo': '34px',
+    '--cn-logo': '42.5px',
     '--cn-card': `${cardHeight}px`
   };
   if (surface === 'glass') vars['--cn-blur'] = 'blur(20px) saturate(1.6)';

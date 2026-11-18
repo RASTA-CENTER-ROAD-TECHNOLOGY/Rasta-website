@@ -22,7 +22,13 @@ export default function Academics() {
         <div className="container">
           <AnimatedContent distance={28} duration={0.65}>
             <div className="section-head">
-              <div>
+              <div className="vtu-title-wrapper">
+                <img
+                  src="/logos/vtu-logo.png"
+                  alt="VTU Emblem"
+                  className="vtu-watermark-logo"
+                  aria-hidden="true"
+                />
                 <h2 className="section-head__title">VTU Extension Center and AICTE Approval</h2>
               </div>
             </div>

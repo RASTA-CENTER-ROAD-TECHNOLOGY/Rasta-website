@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Linkedin, Instagram, GraduationCap, Briefcase } from 'lucide-react';
 import { CONTACT_DETAILS } from '../../data/rastaData';
 
 export default function Footer() {
@@ -26,15 +27,50 @@ export default function Footer() {
             <div>Landline: {CONTACT_DETAILS.landlines.join(' / ')}</div>
             <div>Email: {CONTACT_DETAILS.email}</div>
           </div>
-          <div className="site-footer__social">
-            <a href={CONTACT_DETAILS.social.linkedin} target="_blank" rel="noreferrer">
-              LinkedIn
+          <div className="site-footer__social" aria-label="Social and brochure quick links">
+            <a
+              href={CONTACT_DETAILS.social.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="site-footer__social-btn site-footer__social-btn--linkedin"
+              data-tooltip="LinkedIn"
+              title="LinkedIn"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={19} />
             </a>
-            <a href={CONTACT_DETAILS.social.instagram} target="_blank" rel="noreferrer">
-              Instagram
+            <a
+              href={CONTACT_DETAILS.social.instagram}
+              target="_blank"
+              rel="noreferrer"
+              className="site-footer__social-btn site-footer__social-btn--instagram"
+              data-tooltip="Instagram"
+              title="Instagram"
+              aria-label="Instagram"
+            >
+              <Instagram size={19} />
             </a>
-            <a href="/RASTA_Complete_College_Brochure_2026.pdf" target="_blank" rel="noreferrer">
-              Brochure PDF
+            <a
+              href="/RASTA_Academic_Brochure.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="site-footer__social-btn site-footer__social-btn--academic"
+              data-tooltip="Academic Brochure (PDF)"
+              title="Academic Brochure (PDF)"
+              aria-label="Download Academic Brochure (PDF)"
+            >
+              <GraduationCap size={19} />
+            </a>
+            <a
+              href="/RASTA_Consultancy_Brochure_2025.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="site-footer__social-btn site-footer__social-btn--consultancy"
+              data-tooltip="Consultancy Brochure (PDF)"
+              title="Consultancy Brochure (PDF)"
+              aria-label="Download Consultancy Brochure (PDF)"
+            >
+              <Briefcase size={19} />
             </a>
           </div>
         </div>

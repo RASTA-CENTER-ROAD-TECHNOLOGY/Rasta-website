@@ -51,7 +51,8 @@ const cardNavItems = [
       { label: 'Faculty and Staff', href: '/academics#faculty' },
       { label: 'Campus Infrastructure & Library', href: '/academics#infrastructure' },
       { label: 'Placement and Announcements', href: '/academics#placement' },
-      { label: 'Download Brochure PDF', href: '/RASTA_Complete_College_Brochure_2026.pdf' },
+      { label: 'Academic Brochure (PDF)', href: '/RASTA_Academic_Brochure.pdf' },
+      { label: 'Consultancy Brochure (PDF)', href: '/RASTA_Consultancy_Brochure_2025.pdf' },
     ],
   },
   {
@@ -97,7 +98,7 @@ export default function DesktopNavBar() {
             cardHeight={184}
             accentColor="#003366"
             linkComponent={RouterNavLink}
-            style={{ '--cn-radius': '0px', '--cn-bar': '56px' }}
+            style={{ '--cn-radius': '0px', '--cn-bar': '56px', '--cn-logo': '42.5px' }}
           />
         </div>
       </div>

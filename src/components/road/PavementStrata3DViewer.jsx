@@ -51,11 +51,14 @@ function createStrataFallback() {
   return group;
 }
 
-const getStrataFov = (w) => ((w || 480) < 768 ? 40 : 35);
+const getStrataFov = (w) => ((w || 480) < 768 ? 42 : 35);
 
 const getStrataFitScale = (w, h) => {
   const aspect = (w || 1) / (h || 1);
-  if ((w || 480) < 768 || aspect < 1.65) {
+  if ((w || 480) < 768) {
+    return Math.min(1.4, Math.max(1.05, 1.32 / Math.max(aspect, 0.75)));
+  }
+  if (aspect < 1.65) {
     return Math.min(1.65, Math.max(1.18, 1.58 / Math.max(aspect, 0.72)));
   }
   return 1.0;
@@ -96,7 +99,7 @@ export default function PavementStrata3DViewer({ activeIndex = 0, onSelectLayer 
     const isNarrow = width < 768;
 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isNarrow ? 1.5 : 2));
-    renderer.setSize(width, height);
+    renderer.setSize(width, height, false);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -377,8 +380,11 @@ export default function PavementStrata3DViewer({ activeIndex = 0, onSelectLayer 
       camera.fov = getStrataFov(w);
       camera.aspect = w / h;
       camera.position.set(5.9 * scale, 3.8 * scale, 5.9 * scale);
+      camera.lookAt(0, -0.05, 0);
       camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
+      renderer.setSize(w, h, false);
+      renderer.domElement.style.width = '100%';
+      renderer.domElement.style.height = '100%';
       renderer.render(scene, camera);
     });
     resizeObserver.observe(host);
@@ -428,8 +434,7 @@ export default function PavementStrata3DViewer({ activeIndex = 0, onSelectLayer 
       )}
       <div className="pavement-diagram-caption pavement-diagram-caption--interactive">
         <span>
-          {modelReady ? 'Blender 3D Cross-Section' : '3D Structural Cross-Section'} | Drag or
-          Click Layer
+          3D Structural Cross-Section | Drag or Click Layer
         </span>
         <button
           type="button"
