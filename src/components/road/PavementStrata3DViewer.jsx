@@ -284,44 +284,59 @@ export default function PavementStrata3DViewer({ activeIndex = 0, onSelectLayer 
     // Drag-to-orbit and Raycaster click to pick any pavement stratum directly
     const raycaster = new THREE.Raycaster();
     const pointerNdc = new THREE.Vector2();
-    const orbit = { dragging: false, moved: false, startX: 0, yaw: 0.0, targetYaw: 0.0 };
+    const orbit = { dragging: false, moved: false, startX: 0, yaw: 0.0, targetYaw: 0.0, activePointerId: null };
 
     const onDown = (e) => {
       orbit.dragging = true;
       orbit.moved = false;
       orbit.startX = e.clientX;
+      orbit.activePointerId = e.pointerId;
+      try {
+        e.currentTarget?.setPointerCapture(e.pointerId);
+      } catch {}
     };
     const onMove = (e) => {
       if (!orbit.dragging) return;
       const dx = e.clientX - orbit.startX;
-      if (Math.abs(dx) > 4) orbit.moved = true;
+      if (Math.abs(dx) > 3) orbit.moved = true;
       orbit.targetYaw += dx * 0.008;
       orbit.startX = e.clientX;
     };
     const onUp = (e) => {
-      if (orbit.dragging && !orbit.moved) {
-        const rect = host.getBoundingClientRect();
-        pointerNdc.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        pointerNdc.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-        raycaster.setFromCamera(pointerNdc, camera);
-        const hits = raycaster.intersectObjects(modelRoot.children, true);
-        if (hits.length > 0) {
-          let curr = hits[0].object;
-          while (curr && !STRATUM_ORDER.some((s) => s.name === curr.name)) {
-            curr = curr.parent;
-          }
-          const matched = curr && STRATUM_ORDER.find((s) => s.name === curr.name);
-          if (matched && onSelectRef.current) {
-            onSelectRef.current(matched.idx);
+      if (orbit.activePointerId !== null && orbit.activePointerId === e.pointerId) {
+        if (orbit.dragging && !orbit.moved) {
+          const rect = host.getBoundingClientRect();
+          pointerNdc.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          pointerNdc.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(pointerNdc, camera);
+          const hits = raycaster.intersectObjects(modelRoot.children, true);
+          if (hits.length > 0) {
+            let curr = hits[0].object;
+            while (curr && !STRATUM_ORDER.some((s) => s.name === curr.name)) {
+              curr = curr.parent;
+            }
+            const matched = curr && STRATUM_ORDER.find((s) => s.name === curr.name);
+            if (matched && onSelectRef.current) {
+              onSelectRef.current(matched.idx);
+            }
           }
         }
+        orbit.dragging = false;
+        orbit.activePointerId = null;
+        try {
+          e.currentTarget?.releasePointerCapture?.(e.pointerId);
+        } catch {}
       }
+    };
+    const onCancel = () => {
       orbit.dragging = false;
+      orbit.activePointerId = null;
     };
 
     host.addEventListener('pointerdown', onDown);
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onCancel);
 
     let isInViewport = true;
     let rafId = 0;
@@ -333,10 +348,15 @@ export default function PavementStrata3DViewer({ activeIndex = 0, onSelectLayer 
         return;
       }
       rafId = requestAnimationFrame(tick);
+      const dt = Math.min(clock.getDelta(), 0.05);
       const t = clock.elapsedTime;
 
+      if (!orbit.dragging && !prefersReduced) {
+        orbit.targetYaw += dt * 0.14;
+      }
+
       orbit.yaw += (orbit.targetYaw - orbit.yaw) * 0.08;
-      const sway = prefersReduced ? 0 : Math.sin(t * 0.45) * 0.14;
+      const sway = prefersReduced ? 0 : Math.sin(t * 0.45) * 0.08;
       pivot.rotation.y = sway + orbit.yaw;
 
       layerNodes.forEach((item) => {
@@ -399,6 +419,7 @@ export default function PavementStrata3DViewer({ activeIndex = 0, onSelectLayer 
       host.removeEventListener('pointerdown', onDown);
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onCancel);
       Object.values(matPacks).forEach((p) => p.dispose());
       markMat.dispose();
       highlightShaderMat.dispose();

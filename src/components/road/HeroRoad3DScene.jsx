@@ -411,32 +411,56 @@ export default function HeroRoad3DScene() {
       }
     }, sectionEl);
 
-    const pointer = { x: 0, y: 0, targetX: 0, targetY: 0, dragYaw: 0, dragging: false, lastX: 0 };
+    const pointer = {
+      x: 0,
+      y: 0,
+      targetX: 0,
+      targetY: 0,
+      dragYaw: 0,
+      autoYaw: 0,
+      dragging: false,
+      lastX: 0,
+      activePointerId: null,
+    };
     const onPointerDown = (e) => {
       pointer.dragging = true;
       pointer.lastX = e.clientX;
+      pointer.activePointerId = e.pointerId;
+      try {
+        e.currentTarget?.setPointerCapture(e.pointerId);
+      } catch {}
     };
-    const onPointerUp = () => {
+    const onPointerUp = (e) => {
       pointer.dragging = false;
+      pointer.activePointerId = null;
+      try {
+        e.currentTarget?.releasePointerCapture?.(e.pointerId);
+      } catch {}
+    };
+    const onPointerCancel = () => {
+      pointer.dragging = false;
+      pointer.activePointerId = null;
     };
     const onPointerMove = (e) => {
       const rect = host.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
       if (pointer.dragging) {
-        pointer.dragYaw += (e.clientX - pointer.lastX) * 0.005;
+        pointer.dragYaw += (e.clientX - pointer.lastX) * 0.007;
         pointer.lastX = e.clientX;
       }
       pointer.targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
       pointer.targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
     };
     const onPointerLeave = () => {
-      pointer.dragging = false;
-      pointer.targetX = 0;
-      pointer.targetY = 0;
+      if (!pointer.dragging) {
+        pointer.targetX = 0;
+        pointer.targetY = 0;
+      }
     };
 
     host.addEventListener('pointerdown', onPointerDown);
     window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerCancel);
     host.addEventListener('pointermove', onPointerMove);
     host.addEventListener('pointerleave', onPointerLeave);
 
@@ -484,12 +508,16 @@ export default function HeroRoad3DScene() {
       const dt = Math.min(clock.getDelta(), 0.05);
       const elapsed = clock.elapsedTime;
 
+      if (!pointer.dragging && !prefersReduced) {
+        pointer.autoYaw += dt * 0.12;
+      }
+
       pointer.x += (pointer.targetX - pointer.x) * 0.06;
       pointer.y += (pointer.targetY - pointer.y) * 0.06;
 
-      const idleRot = prefersReduced ? 0 : Math.sin(elapsed * 0.25) * 0.05;
-      rootPivot.rotation.y = idleRot + pointer.x * 0.14 + pointer.dragYaw;
-      rootPivot.rotation.x = pointer.y * 0.03;
+      const idlePitch = prefersReduced ? 0 : Math.sin(elapsed * 0.4) * 0.02;
+      rootPivot.rotation.y = pointer.autoYaw + pointer.dragYaw + pointer.x * 0.14;
+      rootPivot.rotation.x = idlePitch + pointer.y * 0.03;
 
       const introDefaults = VIEW_MODES[1].explodeOffsets;
 
@@ -573,6 +601,7 @@ export default function HeroRoad3DScene() {
       resizeObserver.disconnect();
       host.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerCancel);
       host.removeEventListener('pointermove', onPointerMove);
       host.removeEventListener('pointerleave', onPointerLeave);
       ctx.revert();
