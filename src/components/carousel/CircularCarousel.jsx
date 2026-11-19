@@ -445,7 +445,8 @@ const CircularCarousel = ({
         }
       }
 
-      const paused = (s.pauseOnHover && state.hover) || state.drag || now < state.holdUntil;
+      const isHoverPaused = s.pauseOnHover && state.hover && state.pointer.inside;
+      const paused = isHoverPaused || state.drag || now < state.holdUntil;
       const cruise = s.autoplay === 'drift' && !paused && !state.intro ? s.speed * state.dir : 0;
       let busy = Boolean(state.intro) || state.drag;
 
@@ -672,6 +673,10 @@ const CircularCarousel = ({
   const handlePointerDown = event => {
     const state = stateRef.current;
     state.suppressClick = false;
+    if (event.pointerType !== 'mouse') {
+      state.hover = false;
+      state.pointer.inside = false;
+    }
     if (!draggable || event.button !== 0) return;
     state.press = {
       id: event.pointerId,
@@ -727,10 +732,15 @@ const CircularCarousel = ({
     const press = state.press;
     if (!press || press.id !== event.pointerId) return;
     state.press = null;
+    if (event.pointerType !== 'mouse') {
+      state.hover = false;
+      state.pointer.inside = false;
+    }
     if (!press.moved) return;
     state.drag = false;
     setDragging(false);
     state.suppressClick = true;
+    state.holdUntil = 0;
     const s = settingsRef.current;
     const first = press.samples[0];
     const last = press.samples[press.samples.length - 1];
@@ -738,7 +748,7 @@ const CircularCarousel = ({
     const velocity = span > 0.008 ? clamp((last.angle - first.angle) / span, -1400, 1400) : 0;
     state.velocity = velocity;
     if (Math.abs(velocity) > 60) state.dir = Math.sign(velocity);
-    const coasting = s.autoplay === 'drift' && !(s.pauseOnHover && state.hover && event.pointerType === 'mouse');
+    const coasting = s.autoplay === 'drift';
     if (s.snap && !coasting) {
       const tau = 0.18 + s.momentum * 1.5;
       state.target = Math.round((state.angle + velocity * tau * 0.55) / s.step) * s.step;

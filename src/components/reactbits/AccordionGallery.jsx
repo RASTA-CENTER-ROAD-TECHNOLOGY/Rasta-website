@@ -43,6 +43,7 @@ const AccordionGallery = ({
   const tlRef = useRef(null);
   const firstRunRef = useRef(true);
   const mediaSizeRef = useRef(320);
+  const pauseAutoUntilRef = useRef(0);
 
   const [isNarrowScreen, setIsNarrowScreen] = useState(() => {
     return typeof window !== 'undefined' ? window.innerWidth < 640 : false;
@@ -170,11 +171,23 @@ const AccordionGallery = ({
     []
   );
 
+  useEffect(() => {
+    if (!isVertical || prefersReduced || count <= 1) return undefined;
+
+    const intervalId = setInterval(() => {
+      if (Date.now() < pauseAutoUntilRef.current) return;
+      setActive((prev) => (prev + 1) % count);
+    }, 3600);
+
+    return () => clearInterval(intervalId);
+  }, [isVertical, count, prefersReduced]);
+
   const handleEnter = i => {
     if (trigger === 'hover') setActive(i);
   };
 
   const handleClick = (i, e) => {
+    pauseAutoUntilRef.current = Date.now() + 8000;
     if (i !== active) {
       e.preventDefault();
       setActive(i);

@@ -509,7 +509,7 @@ export default function HeroRoad3DScene() {
       const elapsed = clock.elapsedTime;
 
       if (!pointer.dragging && !prefersReduced) {
-        pointer.autoYaw += dt * 0.12;
+        pointer.autoYaw += dt * (viewportWidth < 768 ? 0.22 : 0.14);
       }
 
       pointer.x += (pointer.targetX - pointer.x) * 0.06;

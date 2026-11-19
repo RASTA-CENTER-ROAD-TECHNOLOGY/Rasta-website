@@ -101,6 +101,20 @@ export const CAROUSEL_SLIDES = [
     category: 'campus',
   },
   {
+    src: '/images/computer-lab.jpg',
+    alt: 'Modern CAD simulation and digital highway infrastructure computer lab at RASTA',
+    title: 'Computer & Simulation Laboratory',
+    subtitle: 'Bentley digital infrastructure training, traffic simulation, and pavement modeling',
+    category: 'campus',
+  },
+  {
+    src: '/images/brochure/acad_p3_6_964x630.jpeg',
+    alt: 'M.Tech Highway Technology students in modern RASTA classroom',
+    title: 'Postgraduate Academic Programs',
+    subtitle: 'VTU M.Tech in Highway Technology and Infrastructure Management',
+    category: 'campus',
+  },
+  {
     src: '/images/brochure/acad_p2_1_1356x1033.jpeg',
     alt: 'RASTA Center for Road Technology campus entrance at Peenya, Bengaluru',
     title: 'RASTA Peenya Campus',
@@ -155,20 +169,6 @@ export const CAROUSEL_SLIDES = [
     title: 'Mobile Testing Laboratory',
     subtitle: 'On-site field investigations and NDT capability',
     category: 'field',
-  },
-  {
-    src: '/images/brochure/acad_p3_6_964x630.jpeg',
-    alt: 'M.Tech Highway Technology students in modern RASTA classroom',
-    title: 'Postgraduate Academic Programs',
-    subtitle: 'VTU M.Tech in Highway Technology and Infrastructure Management',
-    category: 'campus',
-  },
-  {
-    src: '/images/computer-lab.jpg',
-    alt: 'Modern CAD simulation and digital highway infrastructure computer lab at RASTA',
-    title: 'Computer & Simulation Laboratory',
-    subtitle: 'Bentley digital infrastructure training, traffic simulation, and pavement modeling',
-    category: 'campus',
   },
 ];
 
