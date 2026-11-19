@@ -282,7 +282,6 @@ export default function Academics() {
                       <th>Sl. No.</th>
                       <th>Program Title</th>
                       <th>Duration</th>
-                      <th>Schedule</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -291,7 +290,6 @@ export default function Academics() {
                         <td>{row.sl}</td>
                         <td style={{ fontWeight: 600, color: '#0f172a' }}>{row.title}</td>
                         <td>{row.duration}</td>
-                        <td>{row.schedule}</td>
                       </tr>
                     ))}
                   </tbody>

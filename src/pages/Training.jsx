@@ -87,7 +87,6 @@ export default function Training() {
                     <th>Sl. No.</th>
                     <th>Proposed Training Program</th>
                     <th>Duration</th>
-                    <th>Scheduled Period</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -96,7 +95,6 @@ export default function Training() {
                       <td>{item.sl}</td>
                       <td style={{ fontWeight: 600, color: '#0f172a' }}>{item.title}</td>
                       <td>{item.duration}</td>
-                      <td>{item.schedule}</td>
                     </tr>
                   ))}
                 </tbody>
