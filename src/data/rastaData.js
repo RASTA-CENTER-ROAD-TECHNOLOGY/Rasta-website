@@ -177,34 +177,6 @@ export const CAROUSEL_SLIDES = [
     subtitle: 'Aimil British Pendulum apparatus for road safety evaluation',
     category: 'labs',
   },
-  {
-    src: '/images/brochure/cons_p11_1_348x288.jpeg',
-    alt: 'Field engineers conducting Benkelman Beam Deflection studies on highway',
-    title: 'Benkelman Beam Deflection Study',
-    subtitle: 'Structural pavement evaluation and overlay design',
-    category: 'field',
-  },
-  {
-    src: '/images/brochure/cons_p11_4_348x288.jpeg',
-    alt: 'Engineer operating MERLIN roughness measurement apparatus on road surface',
-    title: 'MERLIN Roughness Survey',
-    subtitle: 'Functional unevenness evaluation across highway stretches',
-    category: 'field',
-  },
-  {
-    src: '/images/brochure/cons_p11_2_348x288.jpeg',
-    alt: 'Core cutting tests on bituminous pavement layers in the field',
-    title: 'Bituminous Core Extraction',
-    subtitle: 'Layer thickness and field density verification',
-    category: 'field',
-  },
-  {
-    src: '/images/brochure/cons_p5_4_348x219.jpeg',
-    alt: 'RASTA Mobile Laboratory vehicle for on-site road quality testing',
-    title: 'Mobile Testing Laboratory',
-    subtitle: 'On-site field investigations and NDT capability',
-    category: 'field',
-  },
 ];
 
 export const TECHNICAL_ADVISORS_HISTORY = [

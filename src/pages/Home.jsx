@@ -100,7 +100,6 @@ const PILLAR_GALLERY_ITEMS = [
 const CAROUSEL_FILTERS = [
   { id: 'all', label: 'All Facilities' },
   { id: 'labs', label: 'NABL Laboratories' },
-  { id: 'field', label: 'Field Investigations' },
   { id: 'campus', label: 'Campus and Academics' },
 ];
 
@@ -125,7 +124,6 @@ export default function Home() {
 
   const filteredCarouselSlides = useMemo(() => {
     if (carouselFilter === 'labs') return CAROUSEL_SLIDES.filter((s) => s.category === 'labs');
-    if (carouselFilter === 'field') return CAROUSEL_SLIDES.filter((s) => s.category === 'field');
     if (carouselFilter === 'campus') return CAROUSEL_SLIDES.filter((s) => s.category === 'campus');
     return CAROUSEL_SLIDES;
   }, [carouselFilter]);
@@ -435,10 +433,10 @@ export default function Home() {
         </div>
         <div className="container showcase-foreground">
           <div className="apple-section-center">
-            <h2 className="apple-section-title">Campus, NABL Laboratories, and Field Gallery</h2>
+            <h2 className="apple-section-title">Campus and NABL Laboratories Gallery</h2>
             <p className="apple-section-subtitle">
-              Inspect 3D interactive facility views across testing laboratories, highway field
-              diagnostics, and academic classrooms.
+              Inspect 3D interactive facility views across testing laboratories, research apparatus,
+              and academic classrooms.
             </p>
             <div
               className="tab-bar"
