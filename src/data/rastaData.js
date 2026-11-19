@@ -673,30 +673,37 @@ export const PUBLICATIONS = [
 export const ACTIVE_MOUS = [
   {
     partner: 'Bentley Systems India Pvt. Ltd.',
+    logo: '/logos/bentley.svg',
     detail: 'Inauguration of Centre of Excellence for Digital Infrastructure Innovation Hub and software education partnership.',
   },
   {
     partner: 'National Institute of Technical Teachers Training & Research (NITTTR), Kolkata',
+    logo: '/logos/nitttr.png',
     detail: 'Formalized MOU for joint technical education, faculty training, and highway technology innovation.',
   },
   {
     partner: 'National Rural Infrastructure Development Agency (NRIDA), Government of India',
+    logo: '/logos/nrida-pmgsy.svg',
     detail: 'Research and performance evaluation of sustainable rural road pavements in Karnataka.',
   },
   {
     partner: 'UltraTech Cement Limited',
+    logo: '/logos/ultratech.webp',
     detail: 'Collaborative research on concrete pavement engineering and durability.',
   },
   {
     partner: 'Infra Support Engineering Consultants Private Limited',
+    logo: '/logos/infra-support.png',
     detail: 'Joint technical consultancy and highway investigation programs.',
   },
   {
     partner: 'Smart Infra Innovations',
+    logo: '/logos/smart-infra.svg',
     detail: 'Applied digital and smart infrastructure engineering collaboration.',
   },
   {
     partner: 'Street Matrix Private Limited and Streets Consultants',
+    logo: '/logos/street-matrix.png',
     detail: 'Traffic safety, pavement evaluation, and urban mobility engineering.',
   },
 ];

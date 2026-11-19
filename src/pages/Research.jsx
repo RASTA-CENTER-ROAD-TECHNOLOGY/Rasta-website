@@ -135,7 +135,17 @@ export default function Research() {
             </div>
             <div className="arch-grid arch-grid--3">
               {ACTIVE_MOUS.map((mou) => (
-                <div key={mou.partner} className="arch-cell">
+                <div key={mou.partner} className="arch-cell mou-card">
+                  {mou.logo && (
+                    <div className="mou-card__logo-wrap">
+                      <img
+                        src={mou.logo}
+                        alt={`${mou.partner} logo`}
+                        className="mou-card__logo"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
                   <h3 className="arch-cell__title" style={{ fontSize: '17px' }}>
                     {mou.partner}
                   </h3>

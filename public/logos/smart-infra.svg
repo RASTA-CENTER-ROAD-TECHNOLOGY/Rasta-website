@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" width="240" height="70">
+  <rect width="240" height="70" fill="transparent"/>
+  <!-- Smart infrastructure digital node icon -->
+  <g transform="translate(10, 10)">
+    <polygon points="25,4 47,16 47,42 25,54 3,42 3,16" fill="#003366" stroke="#0ea5e9" stroke-width="2"/>
+    <path d="M25 4 L25 54 M3 16 L47 42 M47 16 L3 42" stroke="#38bdf8" stroke-width="1.2" opacity="0.6"/>
+    <circle cx="25" cy="29" r="6" fill="#f59e0b"/>
+    <circle cx="25" cy="4" r="3" fill="#38bdf8"/>
+    <circle cx="47" cy="16" r="3" fill="#38bdf8"/>
+    <circle cx="47" cy="42" r="3" fill="#38bdf8"/>
+    <circle cx="25" cy="54" r="3" fill="#38bdf8"/>
+    <circle cx="3" cy="42" r="3" fill="#38bdf8"/>
+    <circle cx="3" cy="16" r="3" fill="#38bdf8"/>
+  </g>
+  <!-- Brand text -->
+  <text x="68" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="800" fill="#003366" letter-spacing="0.5">SMART INFRA</text>
+  <text x="69" y="49" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#0284c7" letter-spacing="3">INNOVATIONS</text>
+</svg>
