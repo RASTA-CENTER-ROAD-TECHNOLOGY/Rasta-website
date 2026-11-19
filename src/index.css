@@ -1462,6 +1462,7 @@ a {
   flex-direction: column;
   box-shadow: 0 10px 24px -18px rgba(15, 23, 42, 0.14);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
 }
 
 .photo-card:hover {
@@ -1474,6 +1475,11 @@ a {
   height: 225px;
   object-fit: cover;
   border-bottom: 1px solid var(--border-structural);
+  transition: transform 0.35s ease;
+}
+
+.photo-card:hover .photo-card__img {
+  transform: scale(1.04);
 }
 
 .photo-card__img--portrait {
