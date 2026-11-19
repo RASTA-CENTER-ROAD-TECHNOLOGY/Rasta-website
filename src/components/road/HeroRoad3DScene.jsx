@@ -383,6 +383,47 @@ export default function HeroRoad3DScene() {
         }
       });
 
+      // Attach Welcome signboard in the vehicle movement direction
+      const surveyBeaconsNode = tree.getObjectByName('Survey_Beacons');
+      if (surveyBeaconsNode && !surveyBeaconsNode.getObjectByName('Signboard_Overlay_Right_Front')) {
+        const signGeo = new THREE.PlaneGeometry(1.45, 0.42);
+        const signTex = new THREE.TextureLoader().load('/textures/gantry_sign_diffuse.png');
+        signTex.colorSpace = THREE.SRGBColorSpace;
+        const signOverlayMat = new THREE.MeshStandardMaterial({
+          map: signTex,
+          roughness: 0.28,
+          metalness: 0.05,
+          polygonOffset: true,
+          polygonOffsetFactor: -1.5,
+          polygonOffsetUnits: -1.5,
+        });
+
+        // 3D physical green signboard box on back (-X) side to eliminate beam clipping
+        const backSignBoxGeo = new THREE.BoxGeometry(0.08, 0.42, 1.45);
+        const backSignMat = bridgeMaterials?.gantrySign || new THREE.MeshStandardMaterial({ color: 0x1e6b37, roughness: 0.35 });
+
+        // Left board (-X back face): faces oncoming traffic approaching from -X (scooter/car lane moving into gantry)
+        const leftBackBox = new THREE.Mesh(backSignBoxGeo, backSignMat);
+        leftBackBox.position.set(-0.22, 1.98, 1.05);
+        leftBackBox.castShadow = true;
+        surveyBeaconsNode.add(leftBackBox);
+
+        const leftBack = new THREE.Mesh(signGeo, signOverlayMat);
+        leftBack.name = 'Signboard_Overlay_Left_Back';
+        leftBack.position.set(-0.262, 1.98, 1.05);
+        leftBack.rotation.y = -Math.PI / 2;
+        leftBack.receiveShadow = true;
+        surveyBeaconsNode.add(leftBack);
+
+        // Right board (+X front face): faces oncoming traffic approaching from +X (bus/truck lane moving into gantry)
+        const rightFront = new THREE.Mesh(signGeo, signOverlayMat);
+        rightFront.name = 'Signboard_Overlay_Right_Front';
+        rightFront.position.set(0.262, 1.98, -1.05);
+        rightFront.rotation.y = Math.PI / 2;
+        rightFront.receiveShadow = true;
+        surveyBeaconsNode.add(rightFront);
+      }
+
       modelHolder.add(tree);
     };
 
