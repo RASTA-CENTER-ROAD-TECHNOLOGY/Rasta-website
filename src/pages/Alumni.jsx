@@ -54,8 +54,23 @@ export default function Alumni() {
               {ESTEEMED_CLIENTS.map((org) => {
                 const name = typeof org === 'string' ? org : org.name;
                 const logo = typeof org === 'object' ? org.logo : null;
+                const url = typeof org === 'object' ? org.url : null;
+                const CellTag = url ? 'a' : 'div';
+                const linkProps = url
+                  ? {
+                      href: url,
+                      target: '_blank',
+                      rel: 'noopener noreferrer',
+                      title: `Visit official website of ${name}`,
+                    }
+                  : {};
+
                 return (
-                  <div key={name} className="client-cell">
+                  <CellTag
+                    key={name}
+                    className={`client-cell ${url ? 'client-cell--link' : ''}`}
+                    {...linkProps}
+                  >
                     {logo && (
                       <div className="client-cell__logo-wrap">
                         <img
@@ -67,7 +82,7 @@ export default function Alumni() {
                       </div>
                     )}
                     <span className="client-cell__name">{name}</span>
-                  </div>
+                  </CellTag>
                 );
               })}
             </div>

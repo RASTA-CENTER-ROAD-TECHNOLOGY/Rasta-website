@@ -1158,6 +1158,8 @@ a {
   box-sizing: border-box;
   transition: transform 0.25s ease, opacity 0.25s ease;
   user-select: none;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .partner-logo-card:hover {
@@ -1524,12 +1526,20 @@ a {
   min-height: 145px;
   box-shadow: 0 4px 14px -8px rgba(15, 23, 42, 0.08);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.client-cell--link {
+  cursor: pointer;
 }
 
 .client-cell:hover {
   transform: translateY(-3px);
   border-color: var(--brand-amber);
   box-shadow: 0 14px 28px -12px rgba(15, 23, 42, 0.16);
+  text-decoration: none;
+  color: inherit;
 }
 
 .client-cell__logo-wrap {
@@ -1566,10 +1576,20 @@ a {
   display: flex;
   flex-direction: column;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mou-card--link {
+  cursor: pointer;
 }
 
 .mou-card:hover {
   border-color: var(--brand-amber);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px -12px rgba(15, 23, 42, 0.16);
+  text-decoration: none;
+  color: inherit;
 }
 
 .mou-card__logo-wrap {

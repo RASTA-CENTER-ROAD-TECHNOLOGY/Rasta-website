@@ -134,26 +134,42 @@ export default function Research() {
               </div>
             </div>
             <div className="arch-grid arch-grid--3">
-              {ACTIVE_MOUS.map((mou) => (
-                <div key={mou.partner} className="arch-cell mou-card">
-                  {mou.logo && (
-                    <div className="mou-card__logo-wrap">
-                      <img
-                        src={mou.logo}
-                        alt={`${mou.partner} logo`}
-                        className="mou-card__logo"
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
-                  <h3 className="arch-cell__title" style={{ fontSize: '17px' }}>
-                    {mou.partner}
-                  </h3>
-                  <p className="arch-cell__desc" style={{ marginBottom: 0 }}>
-                    {mou.detail}
-                  </p>
-                </div>
-              ))}
+              {ACTIVE_MOUS.map((mou) => {
+                const CardTag = mou.url ? 'a' : 'div';
+                const linkProps = mou.url
+                  ? {
+                      href: mou.url,
+                      target: '_blank',
+                      rel: 'noopener noreferrer',
+                      title: `Visit official website of ${mou.partner}`,
+                    }
+                  : {};
+
+                return (
+                  <CardTag
+                    key={mou.partner}
+                    className={`arch-cell mou-card ${mou.url ? 'mou-card--link' : ''}`}
+                    {...linkProps}
+                  >
+                    {mou.logo && (
+                      <div className="mou-card__logo-wrap">
+                        <img
+                          src={mou.logo}
+                          alt={`${mou.partner} logo`}
+                          className="mou-card__logo"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <h3 className="arch-cell__title" style={{ fontSize: '17px' }}>
+                      {mou.partner}
+                    </h3>
+                    <p className="arch-cell__desc" style={{ marginBottom: 0 }}>
+                      {mou.detail}
+                    </p>
+                  </CardTag>
+                );
+              })}
             </div>
           </AnimatedContent>
         </div>

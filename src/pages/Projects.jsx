@@ -283,8 +283,23 @@ export default function Projects() {
               {ESTEEMED_CLIENTS.map((c) => {
                 const name = typeof c === 'string' ? c : c.name;
                 const logo = typeof c === 'object' ? c.logo : null;
+                const url = typeof c === 'object' ? c.url : null;
+                const CellTag = url ? 'a' : 'div';
+                const linkProps = url
+                  ? {
+                      href: url,
+                      target: '_blank',
+                      rel: 'noopener noreferrer',
+                      title: `Visit official website of ${name}`,
+                    }
+                  : {};
+
                 return (
-                  <div key={name} className="client-cell">
+                  <CellTag
+                    key={name}
+                    className={`client-cell ${url ? 'client-cell--link' : ''}`}
+                    {...linkProps}
+                  >
                     {logo && (
                       <div className="client-cell__logo-wrap">
                         <img
@@ -296,7 +311,7 @@ export default function Projects() {
                       </div>
                     )}
                     <span className="client-cell__name">{name}</span>
-                  </div>
+                  </CellTag>
                 );
               })}
             </div>

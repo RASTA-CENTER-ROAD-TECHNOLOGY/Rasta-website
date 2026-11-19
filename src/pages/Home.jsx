@@ -132,19 +132,31 @@ export default function Home() {
 
   const partnerLoopItems = useMemo(
     () =>
-      PARTNER_LOGOS.map((partner) => ({
-        node: (
-          <div className="partner-logo-card" title={partner.name}>
-            <img
-              src={partner.src}
-              alt={partner.name}
-              className="partner-logo-img"
-              loading="lazy"
-            />
-          </div>
-        ),
-        title: partner.name,
-      })),
+      PARTNER_LOGOS.map((partner) => {
+        const CardTag = partner.url ? 'a' : 'div';
+        const linkProps = partner.url
+          ? {
+              href: partner.url,
+              target: '_blank',
+              rel: 'noopener noreferrer',
+              title: `Visit ${partner.name} official website`,
+            }
+          : { title: partner.name };
+
+        return {
+          node: (
+            <CardTag className="partner-logo-card" {...linkProps}>
+              <img
+                src={partner.src}
+                alt={partner.name}
+                className="partner-logo-img"
+                loading="lazy"
+              />
+            </CardTag>
+          ),
+          title: partner.name,
+        };
+      }),
     []
   );
 
