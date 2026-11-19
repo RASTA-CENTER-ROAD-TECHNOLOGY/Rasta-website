@@ -383,9 +383,38 @@ export default function HeroRoad3DScene() {
         }
       });
 
-      // Attach Welcome signboard in the vehicle movement direction
+      // Attach Welcome signboard and remove the empty left signboard
       const surveyBeaconsNode = tree.getObjectByName('Survey_Beacons');
       if (surveyBeaconsNode && !surveyBeaconsNode.getObjectByName('Signboard_Overlay_Right_Front')) {
+        // Remove empty left signboard and its mounting box from the 3D gantry
+        surveyBeaconsNode.traverse((child) => {
+          if (child.isMesh && child.geometry) {
+            const geo = child.geometry;
+            const pos = geo.attributes?.position;
+            const index = geo.index;
+            if (pos && index) {
+              const newIndices = [];
+              for (let i = 0; i < index.count; i += 3) {
+                const a = index.getX(i);
+                const b = index.getX(i + 1);
+                const c = index.getX(i + 2);
+                const avgX = (pos.getX(a) + pos.getX(b) + pos.getX(c)) / 3;
+                const avgY = (pos.getY(a) + pos.getY(b) + pos.getY(c)) / 3;
+                const avgZ = (pos.getZ(a) + pos.getZ(b) + pos.getZ(c)) / 3;
+                // Empty left signboard assembly is at gantry level (Y > 1.5, |X| < 0.5, Z > 0.1)
+                const isLeftSignboard = Math.abs(avgX) < 0.5 && avgY > 1.5 && avgZ > 0.1;
+                if (!isLeftSignboard) {
+                  newIndices.push(a, b, c);
+                }
+              }
+              geo.setIndex(newIndices);
+              if (geo.groups && geo.groups.length > 0) {
+                geo.clearGroups();
+              }
+            }
+          }
+        });
+
         const signGeo = new THREE.PlaneGeometry(1.45, 0.42);
         const signTex = new THREE.TextureLoader().load('/textures/gantry_sign_diffuse.png');
         signTex.colorSpace = THREE.SRGBColorSpace;
@@ -397,23 +426,6 @@ export default function HeroRoad3DScene() {
           polygonOffsetFactor: -1.5,
           polygonOffsetUnits: -1.5,
         });
-
-        // 3D physical green signboard box on back (-X) side to eliminate beam clipping
-        const backSignBoxGeo = new THREE.BoxGeometry(0.08, 0.42, 1.45);
-        const backSignMat = bridgeMaterials?.gantrySign || new THREE.MeshStandardMaterial({ color: 0x1e6b37, roughness: 0.35 });
-
-        // Left board (-X back face): faces oncoming traffic approaching from -X (scooter/car lane moving into gantry)
-        const leftBackBox = new THREE.Mesh(backSignBoxGeo, backSignMat);
-        leftBackBox.position.set(-0.22, 1.98, 1.05);
-        leftBackBox.castShadow = true;
-        surveyBeaconsNode.add(leftBackBox);
-
-        const leftBack = new THREE.Mesh(signGeo, signOverlayMat);
-        leftBack.name = 'Signboard_Overlay_Left_Back';
-        leftBack.position.set(-0.262, 1.98, 1.05);
-        leftBack.rotation.y = -Math.PI / 2;
-        leftBack.receiveShadow = true;
-        surveyBeaconsNode.add(leftBack);
 
         // Right board (+X front face): faces oncoming traffic approaching from +X (bus/truck lane moving into gantry)
         const rightFront = new THREE.Mesh(signGeo, signOverlayMat);
