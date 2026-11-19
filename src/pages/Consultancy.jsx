@@ -21,7 +21,7 @@ const FIELD_GALLERY = [
     sub: 'Layer Verification',
   },
   {
-    src: '/images/brochure/cons_p11_5_348x286.jpeg',
+    src: '/images/skid-resistance-tester.jpg',
     title: 'Skid Resistance Test Using British Pendulum Tester',
     sub: 'Surface Friction',
   },

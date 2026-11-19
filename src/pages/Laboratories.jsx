@@ -4,6 +4,45 @@ import PageHeader from '../components/layout/PageHeader';
 import AnimatedContent from '../components/reactbits/AnimatedContent';
 import { LABORATORY_DIVISIONS, TESTING_FACILITIES } from '../data/rastaData';
 
+const LAB_ACTION_GALLERY = [
+  {
+    image: '/images/soil-testing.jpg',
+    title: 'Soil Physical & Specific Gravity Testing',
+    category: 'Soil Mechanics & Geotech',
+    desc: 'Precision pycnometer determination of specific gravity, grain size analysis, and compaction parameters under NABL protocols.',
+  },
+  {
+    image: '/images/compression-testing.jpg',
+    title: 'Automatic Compression Testing (3000 kN)',
+    category: 'Concrete & Masonry Testing',
+    desc: 'Chir-Ayu digital touchscreen automatic testing machine executing stress-controlled compressive strength tests on cubes and cylinders.',
+  },
+  {
+    image: '/images/skid-resistance-tester.jpg',
+    title: 'British Pendulum Skid Resistance Testing',
+    category: 'Pavement Friction & Safety',
+    desc: 'Aimil portable pendulum apparatus measuring pavement microtexture and wet skid resistance in accordance with IRC / BS EN standards.',
+  },
+  {
+    image: '/images/concrete-lab.jpg',
+    title: 'Universal Testing & Concrete Laboratory',
+    category: 'Structural Materials',
+    desc: 'Comprehensive facility housing 600 kN UTM, flexure frames, permeability rigs, curing tanks, and advanced NDT evaluation kits.',
+  },
+  {
+    image: '/images/soil-aggregate-lab.jpg',
+    title: 'NABL Soil & Aggregate Testing Bays',
+    category: 'Subgrade & Pavement Layers',
+    desc: 'Full-suite laboratory for California Bearing Ratio (CBR), Atterberg limits, Los Angeles abrasion, impact value, and sieving.',
+  },
+  {
+    image: '/images/bitumen-lab.jpg',
+    title: 'Bitumen Rheology & Modified Binders',
+    category: 'Bituminous Technology',
+    desc: 'State-of-the-art laboratory for Marshall stability, wheel rut testing, dynamic viscosity, penetration, and binder characterization.',
+  },
+];
+
 export default function Laboratories() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [query, setQuery] = useState('');
@@ -79,17 +118,17 @@ export default function Laboratories() {
             <div className="arch-grid arch-grid--2">
               <div className="photo-card">
                 <img
-                  src="/images/brochure/cons_p5_7_348x219.jpeg"
-                  alt="Automatic Compression Testing Machine 3000 kN"
+                  src="/images/compression-testing.jpg"
+                  alt="Chir-Ayu Automatic Compression Testing Machine 3000 kN with digital touchscreen controller"
                   className="photo-card__img"
                 />
                 <div className="photo-card__body">
                   <div className="photo-card__sub">High-Capacity Testing</div>
                   <h3 className="photo-card__title">Automatic Compression and NDT Facilities</h3>
                   <p className="photo-card__text">
-                    Includes 3000 kN Automatic Compression Testing Machine, 600 kN Universal Testing
-                    Machine, Direct Shear apparatus, Ultrasonic Pulse Velocity tester, Profometer, and
-                    Rebound Hammer.
+                    Includes 3000 kN Automatic Compression Testing Machine with digital touchscreen interface,
+                    600 kN Universal Testing Machine, Direct Shear apparatus, Ultrasonic Pulse Velocity tester,
+                    Profometer, and Rebound Hammer.
                   </p>
                 </div>
               </div>
@@ -109,6 +148,43 @@ export default function Laboratories() {
                   </p>
                 </div>
               </div>
+            </div>
+          </AnimatedContent>
+        </div>
+      </section>
+
+      <section className="section-block section-block--studio" id="lab-gallery">
+        <div className="container">
+          <AnimatedContent distance={28} duration={0.65}>
+            <div className="section-head">
+              <div>
+                <h2 className="section-head__title">Laboratory Investigation &amp; Testing Gallery</h2>
+              </div>
+              <p className="section-head__sub">
+                Glimpse inside RASTA’s ISO/IEC 17025:2017 accredited testing bays and research apparatus in Peenya, Bengaluru.
+              </p>
+            </div>
+
+            <div className="arch-grid arch-grid--3">
+              {LAB_ACTION_GALLERY.map((item) => (
+                <div key={item.title} className="photo-card">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="photo-card__img"
+                    style={{ height: '220px', objectFit: 'cover' }}
+                  />
+                  <div className="photo-card__body">
+                    <div className="photo-card__sub">{item.category}</div>
+                    <h3 className="photo-card__title" style={{ fontSize: '1.05rem', marginBottom: '8px' }}>
+                      {item.title}
+                    </h3>
+                    <p className="photo-card__text" style={{ fontSize: '0.88rem' }}>
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </AnimatedContent>
         </div>

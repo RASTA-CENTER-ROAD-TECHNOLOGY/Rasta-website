@@ -143,10 +143,31 @@ export const CAROUSEL_SLIDES = [
     category: 'campus',
   },
   {
-    src: '/images/brochure/cons_p5_1_349x219.jpeg',
+    src: '/images/soil-aggregate-lab.jpg',
     alt: 'NABL accredited Soil and Aggregate testing laboratory at RASTA',
     title: 'Soil and Aggregate Laboratory',
     subtitle: 'NABL ISO/IEC 17025:2017 accredited testing facility',
+    category: 'labs',
+  },
+  {
+    src: '/images/soil-testing.jpg',
+    alt: 'Researcher conducting soil physical properties and specific gravity pycnometer testing',
+    title: 'Soil Physical Properties Testing',
+    subtitle: 'Precision pycnometer, CBR, direct shear, and triaxial testing',
+    category: 'labs',
+  },
+  {
+    src: '/images/concrete-lab.jpg',
+    alt: 'Universal Testing Machine UTM and Concrete Testing Laboratory at RASTA',
+    title: 'Concrete & Universal Testing Lab',
+    subtitle: '600 kN UTM, flexure testing, and durability rigs',
+    category: 'labs',
+  },
+  {
+    src: '/images/compression-testing.jpg',
+    alt: 'Automatic Compression Testing Machine 3000 kN with digital touchscreen controller',
+    title: 'Automatic Compression Testing (3000 kN)',
+    subtitle: 'Digital touchscreen control for high-precision cube and cylinder compressive strength',
     category: 'labs',
   },
   {
@@ -157,10 +178,10 @@ export const CAROUSEL_SLIDES = [
     category: 'labs',
   },
   {
-    src: '/images/brochure/cons_p5_7_348x219.jpeg',
-    alt: 'Automatic Compression Testing Machine 3000 kN in Concrete Laboratory',
-    title: 'Concrete Testing Laboratory',
-    subtitle: '3000 kN compression and 600 kN UTM equipment',
+    src: '/images/skid-resistance-tester.jpg',
+    alt: 'Testing pavement microtexture with British Pendulum Skid Resistance Tester',
+    title: 'Skid Resistance & Surface Friction',
+    subtitle: 'Aimil British Pendulum apparatus for road safety evaluation',
     category: 'labs',
   },
   {
@@ -934,7 +955,7 @@ export const TESTING_FACILITIES = [
 export const LABORATORY_DIVISIONS = [
   {
     name: 'Soil and Aggregate Laboratory',
-    image: '/images/brochure/cons_p5_1_349x219.jpeg',
+    image: '/images/soil-aggregate-lab.jpg',
     equipment: [
       'CBR Apparatus and Moulds',
       'Casagrande Atterberg Limits Apparatus',
@@ -948,7 +969,7 @@ export const LABORATORY_DIVISIONS = [
   },
   {
     name: 'Universal Testing and Concrete Laboratory',
-    image: '/images/brochure/cons_p5_5_348x219.jpeg',
+    image: '/images/concrete-lab.jpg',
     equipment: [
       'Fully Automatic Compression Testing Machine - 3000 kN',
       'Compression Testing Machine - 2000 kN',
