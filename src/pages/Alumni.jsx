@@ -51,11 +51,25 @@ export default function Alumni() {
               </div>
             </div>
             <div className="clients-ledger">
-              {ESTEEMED_CLIENTS.map((org) => (
-                <div key={org} className="client-cell">
-                  {org}
-                </div>
-              ))}
+              {ESTEEMED_CLIENTS.map((org) => {
+                const name = typeof org === 'string' ? org : org.name;
+                const logo = typeof org === 'object' ? org.logo : null;
+                return (
+                  <div key={name} className="client-cell">
+                    {logo && (
+                      <div className="client-cell__logo-wrap">
+                        <img
+                          src={logo}
+                          alt={`${name} logo`}
+                          className="client-cell__logo"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <span className="client-cell__name">{name}</span>
+                  </div>
+                );
+              })}
             </div>
           </AnimatedContent>
         </div>

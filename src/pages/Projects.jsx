@@ -280,11 +280,25 @@ export default function Projects() {
               </div>
             </div>
             <div className="clients-ledger">
-              {ESTEEMED_CLIENTS.map((c) => (
-                <div key={c} className="client-cell">
-                  {c}
-                </div>
-              ))}
+              {ESTEEMED_CLIENTS.map((c) => {
+                const name = typeof c === 'string' ? c : c.name;
+                const logo = typeof c === 'object' ? c.logo : null;
+                return (
+                  <div key={name} className="client-cell">
+                    {logo && (
+                      <div className="client-cell__logo-wrap">
+                        <img
+                          src={logo}
+                          alt={`${name} logo`}
+                          className="client-cell__logo"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <span className="client-cell__name">{name}</span>
+                  </div>
+                );
+              })}
             </div>
           </AnimatedContent>
         </div>
