@@ -382,6 +382,51 @@ export default function HeroRoad3DScene() {
           }
         }
       });
+
+      // Attach high-definition Welcome signboards to gantry
+      const surveyBeaconsNode = tree.getObjectByName('Survey_Beacons');
+      if (surveyBeaconsNode && !surveyBeaconsNode.getObjectByName('Signboard_Overlay_Left')) {
+        const signGeo = new THREE.PlaneGeometry(1.45, 0.42);
+        const signTex = new THREE.TextureLoader().load('/textures/gantry_sign_diffuse.png');
+        signTex.colorSpace = THREE.SRGBColorSpace;
+        const signOverlayMat = new THREE.MeshStandardMaterial({
+          map: signTex,
+          roughness: 0.28,
+          metalness: 0.05,
+          polygonOffset: true,
+          polygonOffsetFactor: -1.5,
+          polygonOffsetUnits: -1.5,
+        });
+
+        // Left board front (over left lanes, +Z side)
+        const leftFront = new THREE.Mesh(signGeo, signOverlayMat);
+        leftFront.name = 'Signboard_Overlay_Left';
+        leftFront.position.set(0.262, 1.98, 1.045);
+        leftFront.rotation.y = Math.PI / 2;
+        leftFront.receiveShadow = true;
+        surveyBeaconsNode.add(leftFront);
+
+        // Left board back
+        const leftBack = new THREE.Mesh(signGeo, signOverlayMat);
+        leftBack.position.set(0.178, 1.98, 1.045);
+        leftBack.rotation.y = -Math.PI / 2;
+        surveyBeaconsNode.add(leftBack);
+
+        // Right board front (over right lanes, -Z side)
+        const rightFront = new THREE.Mesh(signGeo, signOverlayMat);
+        rightFront.name = 'Signboard_Overlay_Right';
+        rightFront.position.set(0.262, 1.98, -1.045);
+        rightFront.rotation.y = Math.PI / 2;
+        rightFront.receiveShadow = true;
+        surveyBeaconsNode.add(rightFront);
+
+        // Right board back
+        const rightBack = new THREE.Mesh(signGeo, signOverlayMat);
+        rightBack.position.set(0.178, 1.98, -1.045);
+        rightBack.rotation.y = -Math.PI / 2;
+        surveyBeaconsNode.add(rightBack);
+      }
+
       modelHolder.add(tree);
     };
 
