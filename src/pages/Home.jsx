@@ -105,12 +105,12 @@ const CAROUSEL_FILTERS = [
 ];
 
 const METRIC_TARGETS = [
-  { target: 20, suffix: '+', label: 'Years of Experience', detail: 'Established in Bengaluru in 2002' },
+  { target: 25, suffix: '+', label: 'Years of Experience', detail: 'Established in Bengaluru in 2002' },
   { target: 50, suffix: '+', label: 'Faculty and Industry Experts', detail: 'Full-time faculty and guest specialists' },
   { target: 150, suffix: '+', label: 'Education and Training Programs', detail: 'Campus and on-site workshops' },
   { target: 5000, suffix: '+', label: 'Graduates and Trainees', detail: 'Includes 3,300+ practicing engineers' },
   { target: 62, suffix: '', label: 'NABL and Field Tests', detail: 'ISO/IEC 17025:2017 accredited' },
-  { target: 112, suffix: '+', label: 'Consultancy and R&D Projects', detail: 'Ongoing and completed studies' },
+  { target: 150, suffix: '+', label: 'Consultancy and R&D Projects', detail: 'Ongoing and completed studies' },
 ];
 
 export default function Home() {

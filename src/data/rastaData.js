@@ -28,12 +28,12 @@ export const INSTITUTE_INFO = {
     'Faculty representation on technical committees of Indian Roads Congress (IRC) and Bureau of Indian Standards (BIS)',
   ],
   metrics: [
-    { value: '20+', label: 'Years of Experience', detail: 'Established in Bengaluru in 2002' },
+    { value: '25+', label: 'Years of Experience', detail: 'Established in Bengaluru in 2002' },
     { value: '50+', label: 'Faculty and Industry Experts', detail: 'Full-time faculty and guest specialists' },
     { value: '150+', label: 'Education and Training Programs', detail: 'Campus and on-site engineering workshops' },
     { value: '5,000+', label: 'Graduates and Trainees', detail: 'Includes 3,300+ practicing engineers and ~1,000 M.Tech graduates' },
     { value: '62', label: 'NABL and Field Tests', detail: 'ISO/IEC 17025:2017 accredited material and field testing' },
-    { value: '112+', label: 'Consultancy and R&D Projects', detail: 'Ongoing, completed, and funded engineering works' },
+    { value: '150+', label: 'Consultancy and R&D Projects', detail: 'Ongoing, completed, and funded engineering works' },
   ],
 };
 
