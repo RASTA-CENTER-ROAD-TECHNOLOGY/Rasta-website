@@ -174,7 +174,7 @@ export default function Academics() {
               </div>
               <div className="photo-card">
                 <img
-                  src="/images/brochure/acad_p3_5_1016x665.jpeg"
+                  src="/images/computer-lab.jpg"
                   alt="RASTA Computer Laboratory"
                   className="photo-card__img"
                 />

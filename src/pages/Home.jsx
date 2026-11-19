@@ -124,9 +124,9 @@ export default function Home() {
   const activePillar = FOUR_PILLARS[activePillarIdx] || FOUR_PILLARS[0];
 
   const filteredCarouselSlides = useMemo(() => {
-    if (carouselFilter === 'labs') return CAROUSEL_SLIDES.slice(2, 5);
-    if (carouselFilter === 'field') return CAROUSEL_SLIDES.slice(5, 9);
-    if (carouselFilter === 'campus') return [CAROUSEL_SLIDES[0], CAROUSEL_SLIDES[1], CAROUSEL_SLIDES[9]];
+    if (carouselFilter === 'labs') return CAROUSEL_SLIDES.filter((s) => s.category === 'labs');
+    if (carouselFilter === 'field') return CAROUSEL_SLIDES.filter((s) => s.category === 'field');
+    if (carouselFilter === 'campus') return CAROUSEL_SLIDES.filter((s) => s.category === 'campus');
     return CAROUSEL_SLIDES;
   }, [carouselFilter]);
 
