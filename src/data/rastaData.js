@@ -129,7 +129,7 @@ export const CAROUSEL_SLIDES = [
     category: 'labs',
   },
   {
-    src: '/images/brochure/cons_p5_6_228x144.jpeg',
+    src: '/images/bitumen-lab.jpg',
     alt: 'Bitumen and modified binder laboratory instrumentation',
     title: 'Bitumen and Mixes Laboratory',
     subtitle: 'Marshall stability, rutting, viscosity, and binder rheology',
@@ -933,7 +933,7 @@ export const LABORATORY_DIVISIONS = [
   },
   {
     name: 'Bitumen and Bituminous Mix Laboratory',
-    image: '/images/brochure/cons_p5_6_228x144.jpeg',
+    image: '/images/bitumen-lab.jpg',
     equipment: [
       'Marshall Stability Test Apparatus and Auto Compactor',
       'Wheel Rut Shaper and Wheel Rut Tester',
