@@ -190,8 +190,8 @@ export default function Academics() {
             <div className="arch-grid arch-grid--3" style={{ marginBottom: '28px' }}>
               <div className="photo-card">
                 <img
-                  src="/images/brochure/acad_p3_4_1044x654.jpeg"
-                  alt="RASTA Technical Library"
+                  src="/images/technical-library.jpg"
+                  alt="RASTA Technical Reference Library"
                   className="photo-card__img"
                 />
                 <div className="photo-card__body">
@@ -212,13 +212,52 @@ export default function Academics() {
               </div>
               <div className="photo-card">
                 <img
-                  src="/images/brochure/acad_p3_6_964x630.jpeg"
-                  alt="RASTA Lecture Classrooms"
+                  src="/images/classroom-lecture.jpg"
+                  alt="RASTA Lecture Classrooms and Seminar Halls"
                   className="photo-card__img"
                 />
                 <div className="photo-card__body">
                   <h3 className="photo-card__title">Classrooms and Seminar Halls</h3>
                   <p className="photo-card__text">{ACADEMIC_INFRASTRUCTURE.classrooms}</p>
+                </div>
+              </div>
+              <div className="photo-card">
+                <img
+                  src="/images/rasta-reception-desk.jpg"
+                  alt="RASTA Administrative Center Reception"
+                  className="photo-card__img"
+                />
+                <div className="photo-card__body">
+                  <h3 className="photo-card__title">Administrative Center</h3>
+                  <p className="photo-card__text">
+                    Dedicated academic administration and student support services at Peenya campus.
+                  </p>
+                </div>
+              </div>
+              <div className="photo-card">
+                <img
+                  src="/images/rasta-campus-lobby.jpg"
+                  alt="RASTA Campus Lobby & Orientation Hall"
+                  className="photo-card__img"
+                />
+                <div className="photo-card__body">
+                  <h3 className="photo-card__title">Campus Lobby & Orientation Hall</h3>
+                  <p className="photo-card__text">
+                    Spacious central reception, academic counseling area, and student assembly lobby.
+                  </p>
+                </div>
+              </div>
+              <div className="photo-card">
+                <img
+                  src="/images/library-study-hall.jpg"
+                  alt="RASTA Student Research and Reading Hall"
+                  className="photo-card__img"
+                />
+                <div className="photo-card__body">
+                  <h3 className="photo-card__title">Student Research & Reading Hall</h3>
+                  <p className="photo-card__text">
+                    Collaborative reading rooms equipped with research carrels, reference codes, and archives.
+                  </p>
                 </div>
               </div>
             </div>

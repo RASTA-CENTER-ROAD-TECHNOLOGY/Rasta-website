@@ -39,7 +39,7 @@ export default function About() {
               </div>
               <div className="photo-card">
                 <img
-                  src="/images/brochure/acad_p2_1_1356x1033.jpeg"
+                  src="/images/rasta-campus-lobby.jpg"
                   alt="RASTA Center for Road Technology entrance at Volvo Peenya campus"
                   className="photo-card__img"
                   style={{ height: '280px' }}

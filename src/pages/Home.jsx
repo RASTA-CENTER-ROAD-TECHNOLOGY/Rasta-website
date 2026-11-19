@@ -76,9 +76,9 @@ const PILLAR_PROMO_TILES = [
 
 const PILLAR_GALLERY_ITEMS = [
   {
-    image: '/images/brochure/acad_p3_6_964x630.jpeg',
+    image: '/images/classroom-lecture.jpg',
     label: 'Academics - VTU Postgraduate Programs',
-    alt: 'M.Tech Highway Technology students in modern RASTA classroom',
+    alt: 'M.Tech Highway Technology lecture in modern RASTA classroom',
   },
   {
     image: '/images/brochure/acad_p5_6_906x559.jpeg',
