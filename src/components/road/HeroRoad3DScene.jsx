@@ -48,14 +48,21 @@ const VIEW_MODES = [
 ];
 
 const VEHICLE_MOTION = {
-  Vehicle_01_Truck: { dir: 1, speed: 2.6 },
-  Vehicle_07_Car_Hatch: { dir: 1, speed: 3.4 },
-  Vehicle_03_Car_Sedan: { dir: 1, speed: 4.2 },
-  Vehicle_05_Bike_01: { dir: 1, speed: 4.5 },
-  Vehicle_04_Car_SUV: { dir: -1, speed: 3.8 },
-  Vehicle_06_Bike_02: { dir: -1, speed: 4.4 },
-  Vehicle_02_Bus: { dir: -1, speed: 2.8 },
-  Vehicle_08_Truck_Hauler: { dir: -1, speed: 2.4 },
+  // Lane 1: Outer North (+X direction) - heavy/mixed traffic cruising
+  Vehicle_01_Truck: { dir: 1, speed: 2.6, initX: -2.725 },
+  Vehicle_07_Car_Hatch: { dir: 1, speed: 2.6, initX: 2.725 },
+
+  // Lane 2: Inner North (+X direction) - fast overtaking lane
+  Vehicle_03_Car_Sedan: { dir: 1, speed: 3.8, initX: -2.725 },
+  Vehicle_05_Bike_01: { dir: 1, speed: 3.8, initX: 2.725 },
+
+  // Lane 3: Inner South (-X direction) - fast overtaking lane
+  Vehicle_04_Car_SUV: { dir: -1, speed: 3.8, initX: -2.725 },
+  Vehicle_06_Bike_02: { dir: -1, speed: 3.8, initX: 2.725 },
+
+  // Lane 4: Outer South (-X direction) - bus & hauler cruising
+  Vehicle_08_Truck_Hauler: { dir: -1, speed: 2.6, initX: -2.725 },
+  Vehicle_02_Bus: { dir: -1, speed: 2.6, initX: 2.725 },
 };
 
 const LAYER_CALLOUTS = [
@@ -169,14 +176,14 @@ function createProceduralFallbackGroup(bridgeMaterials) {
   group.add(gantryGroup);
 
   const fallbackVehicles = [
-    { name: 'Vehicle_01_Truck', w: 1.5, h: 0.52, d: 0.44, x: -2.6, z: 1.64, color: 0x0f3d7a },
-    { name: 'Vehicle_07_Car_Hatch', w: 0.9, h: 0.3, d: 0.38, x: 2.6, z: 1.64, color: 0xf1f5f9 },
-    { name: 'Vehicle_03_Car_Sedan', w: 0.96, h: 0.3, d: 0.38, x: 1.8, z: 0.58, color: 0xb91c1c },
-    { name: 'Vehicle_05_Bike_01', w: 0.45, h: 0.28, d: 0.14, x: -3.4, z: 0.58, color: 0xdc2626 },
-    { name: 'Vehicle_04_Car_SUV', w: 0.98, h: 0.35, d: 0.4, x: -1.6, z: -0.58, color: 0x94a3b8 },
-    { name: 'Vehicle_06_Bike_02', w: 0.45, h: 0.28, d: 0.14, x: 3.5, z: -0.58, color: 0x1d4ed8 },
-    { name: 'Vehicle_02_Bus', w: 1.62, h: 0.5, d: 0.46, x: 1.8, z: -1.64, color: 0xd97706 },
-    { name: 'Vehicle_08_Truck_Hauler', w: 1.45, h: 0.48, d: 0.44, x: -3.5, z: -1.64, color: 0xb91c1c },
+    { name: 'Vehicle_01_Truck', w: 1.5, h: 0.52, d: 0.44, x: -2.725, z: 1.64, color: 0x0f3d7a },
+    { name: 'Vehicle_07_Car_Hatch', w: 0.9, h: 0.3, d: 0.38, x: 2.725, z: 1.64, color: 0xf1f5f9 },
+    { name: 'Vehicle_03_Car_Sedan', w: 0.96, h: 0.3, d: 0.38, x: -2.725, z: 0.58, color: 0xb91c1c },
+    { name: 'Vehicle_05_Bike_01', w: 0.45, h: 0.28, d: 0.14, x: 2.725, z: 0.58, color: 0xdc2626 },
+    { name: 'Vehicle_04_Car_SUV', w: 0.98, h: 0.35, d: 0.4, x: -2.725, z: -0.58, color: 0x94a3b8 },
+    { name: 'Vehicle_06_Bike_02', w: 0.45, h: 0.28, d: 0.14, x: 2.725, z: -0.58, color: 0x1d4ed8 },
+    { name: 'Vehicle_02_Bus', w: 1.62, h: 0.5, d: 0.46, x: 2.725, z: -1.64, color: 0xd97706 },
+    { name: 'Vehicle_08_Truck_Hauler', w: 1.45, h: 0.48, d: 0.44, x: -2.725, z: -1.64, color: 0xb91c1c },
   ];
   fallbackVehicles.forEach((v) => {
     const mesh = new THREE.Mesh(
@@ -373,10 +380,12 @@ export default function HeroRoad3DScene() {
           });
           if (Object.prototype.hasOwnProperty.call(VEHICLE_MOTION, child.name)) {
             const motion = VEHICLE_MOTION[child.name];
+            const startX = motion.initX !== undefined ? motion.initX : child.position.x;
+            child.position.x = startX;
             vehicleStates.push({
               name: child.name,
               node: child,
-              x: child.position.x,
+              x: startX,
               dir: motion.dir,
               speed: motion.speed,
               phase: vehicleStates.length * 1.15,
@@ -582,10 +591,11 @@ export default function HeroRoad3DScene() {
 
       // Live highway vehicle traffic movement & suspension oscillation (always active!)
       const halfSpan = 5.45;
+      const totalSpan = halfSpan * 2;
       vehicleStates.forEach((v) => {
         v.x += v.dir * v.speed * dt;
-        if (v.x > halfSpan) v.x = -halfSpan;
-        if (v.x < -halfSpan) v.x = halfSpan;
+        while (v.x > halfSpan) v.x -= totalSpan;
+        while (v.x < -halfSpan) v.x += totalSpan;
         v.node.position.x = v.x;
         v.node.position.y += Math.sin(elapsed * 9.0 + v.phase) * 0.0025;
         const edgeScale = THREE.MathUtils.clamp((halfSpan - Math.abs(v.x)) / 0.55, 0.02, 1.0);
