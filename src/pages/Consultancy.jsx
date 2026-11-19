@@ -54,7 +54,7 @@ export default function Consultancy() {
                 <h2 className="section-head__title">National Technical Agency Roles</h2>
               </div>
               <Link to="/projects" className="btn btn--primary">
-                View 94+ Consultancy Projects
+                View Consultancy Projects
               </Link>
             </div>
             <div className="arch-grid arch-grid--3">

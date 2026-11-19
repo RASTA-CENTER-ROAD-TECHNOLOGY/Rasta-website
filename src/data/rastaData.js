@@ -86,7 +86,7 @@ export const FOUR_PILLARS = [
       'State Technical Agency (STA) for PMGSY in Karnataka',
       'NABL Accredited Soil, Aggregate, Cement, Concrete, and Bitumen Labs',
       'Mobile Laboratory Van and NDT field investigation team',
-      '94+ ongoing and completed highway, airport, metro, and industrial projects',
+      'Ongoing and completed highway, airport, metro, and industrial projects',
     ],
     link: '/consultancy',
   },
