@@ -1726,6 +1726,7 @@ a {
   .pavement-explorer {
     grid-template-columns: minmax(0, 1fr);
   }
+
   .corridor-detail,
   .pillar-detail-strip {
     grid-template-columns: 1fr;
