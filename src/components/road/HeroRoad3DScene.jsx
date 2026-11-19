@@ -48,14 +48,14 @@ const VIEW_MODES = [
 ];
 
 const VEHICLE_MOTION = {
-  Vehicle_01_Truck: { dir: 1, speed: 1.45 },
-  Vehicle_07_Car_Hatch: { dir: 1, speed: 1.45 },
-  Vehicle_03_Car_Sedan: { dir: 1, speed: 2.35 },
-  Vehicle_05_Bike_01: { dir: 1, speed: 2.35 },
-  Vehicle_04_Car_SUV: { dir: -1, speed: 2.35 },
-  Vehicle_06_Bike_02: { dir: -1, speed: 2.35 },
-  Vehicle_02_Bus: { dir: -1, speed: 1.6 },
-  Vehicle_08_Truck_Hauler: { dir: -1, speed: 1.6 },
+  Vehicle_01_Truck: { dir: 1, speed: 2.6 },
+  Vehicle_07_Car_Hatch: { dir: 1, speed: 3.4 },
+  Vehicle_03_Car_Sedan: { dir: 1, speed: 4.2 },
+  Vehicle_05_Bike_01: { dir: 1, speed: 4.5 },
+  Vehicle_04_Car_SUV: { dir: -1, speed: 3.8 },
+  Vehicle_06_Bike_02: { dir: -1, speed: 4.4 },
+  Vehicle_02_Bus: { dir: -1, speed: 2.8 },
+  Vehicle_08_Truck_Hauler: { dir: -1, speed: 2.4 },
 };
 
 const LAYER_CALLOUTS = [
@@ -428,14 +428,14 @@ export default function HeroRoad3DScene() {
       pointer.activePointerId = e.pointerId;
       try {
         e.currentTarget?.setPointerCapture(e.pointerId);
-      } catch {}
+      } catch { }
     };
     const onPointerUp = (e) => {
       pointer.dragging = false;
       pointer.activePointerId = null;
       try {
         e.currentTarget?.releasePointerCapture?.(e.pointerId);
-      } catch {}
+      } catch { }
     };
     const onPointerCancel = () => {
       pointer.dragging = false;
@@ -497,19 +497,23 @@ export default function HeroRoad3DScene() {
 
     let isInViewport = true;
     let rafId = 0;
-    const clock = new THREE.Clock();
+    let lastTime = performance.now();
+    let elapsed = 0;
 
-    const animate = () => {
+    const animate = (timestamp) => {
       if (!active || !isInViewport) {
         rafId = 0;
         return;
       }
       rafId = requestAnimationFrame(animate);
-      const dt = Math.min(clock.getDelta(), 0.05);
-      const elapsed = clock.elapsedTime;
 
-      if (!pointer.dragging && !prefersReduced) {
-        pointer.autoYaw += dt * (viewportWidth < 768 ? 0.22 : 0.14);
+      const now = timestamp || performance.now();
+      const dt = Math.min(Math.max((now - lastTime) / 1000, 0.001), 0.06);
+      lastTime = now;
+      elapsed += dt;
+
+      if (!pointer.dragging) {
+        pointer.autoYaw += dt * (viewportWidth < 768 ? 0.24 : 0.16);
       }
 
       pointer.x += (pointer.targetX - pointer.x) * 0.06;
@@ -527,19 +531,17 @@ export default function HeroRoad3DScene() {
         node.position.y = baseY + modeDelta + introDelta;
       });
 
-      // Live highway vehicle traffic movement & subtle suspension oscillation
-      if (!prefersReduced) {
-        const halfSpan = 5.45;
-        vehicleStates.forEach((v) => {
-          v.x += v.dir * v.speed * dt;
-          if (v.x > halfSpan) v.x = -halfSpan;
-          if (v.x < -halfSpan) v.x = halfSpan;
-          v.node.position.x = v.x;
-          v.node.position.y += Math.sin(elapsed * 9.0 + v.phase) * 0.0025;
-          const edgeScale = THREE.MathUtils.clamp((halfSpan - Math.abs(v.x)) / 0.55, 0.02, 1.0);
-          v.node.scale.setScalar(edgeScale);
-        });
-      }
+      // Live highway vehicle traffic movement & suspension oscillation (always active!)
+      const halfSpan = 5.45;
+      vehicleStates.forEach((v) => {
+        v.x += v.dir * v.speed * dt;
+        if (v.x > halfSpan) v.x = -halfSpan;
+        if (v.x < -halfSpan) v.x = halfSpan;
+        v.node.position.x = v.x;
+        v.node.position.y += Math.sin(elapsed * 9.0 + v.phase) * 0.0025;
+        const edgeScale = THREE.MathUtils.clamp((halfSpan - Math.abs(v.x)) / 0.55, 0.02, 1.0);
+        v.node.scale.setScalar(edgeScale);
+      });
 
       camera.lookAt(camTarget);
       renderer.render(scene, camera);
@@ -547,19 +549,40 @@ export default function HeroRoad3DScene() {
 
     const startLoop = () => {
       if (!rafId && active && isInViewport) {
-        clock.getDelta();
-        animate();
+        lastTime = performance.now();
+        rafId = requestAnimationFrame(animate);
       }
     };
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      } else {
+        lastTime = performance.now();
+        startLoop();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    const onWindowTouchEnd = () => {
+      pointer.dragging = false;
+      pointer.activePointerId = null;
+    };
+    window.addEventListener('touchend', onWindowTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', onWindowTouchEnd, { passive: true });
 
     const intersectionObserver = new IntersectionObserver(
       (entries) => {
         isInViewport = entries[0]?.isIntersecting ?? true;
         if (isInViewport) {
           startLoop();
+        } else {
+          cancelAnimationFrame(rafId);
+          rafId = 0;
         }
       },
-      { threshold: 0.05 }
+      { rootMargin: '300px 0px 300px 0px', threshold: 0 }
     );
     intersectionObserver.observe(host);
 
@@ -599,6 +622,9 @@ export default function HeroRoad3DScene() {
       cancelAnimationFrame(rafId);
       intersectionObserver.disconnect();
       resizeObserver.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      window.removeEventListener('touchend', onWindowTouchEnd);
+      window.removeEventListener('touchcancel', onWindowTouchEnd);
       host.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('pointerup', onPointerUp);
       window.removeEventListener('pointercancel', onPointerCancel);
