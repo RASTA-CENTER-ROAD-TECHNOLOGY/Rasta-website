@@ -415,8 +415,8 @@ export const FACULTY_ROSTER = {
     { name: 'Mr. Arunkumar Shambu', role: 'Guest Faculty - Industry Expert' },
   ],
   supportStaff: [
-    { name: 'Mrs. Jayanthi Manoj', role: 'Accounts', contact: '+91 99166 82206 | accounts@rastaindia.com' },
-    { name: 'Mrs. Laxmi C. Naik', role: 'General Information', contact: '+91 96063 26161' },
+    { name: 'Mrs. Jayanthi Manoj', role: 'Accounts', contact: 'accounts@rastaindia.com' },
+    { name: 'Mrs. Laxmi C. Naik', role: 'General Information', contact: '' },
     { name: 'Mr. Francis Domello', role: 'Lab Technician', contact: 'francisdomelo@gmail.com' },
     { name: 'Mr. H. S. Sudhakar', role: 'Lab Technician', contact: 'sudhakar4rasta@gmail.com' },
     { name: 'Mr. Shankarappa', role: 'Lab Technician', contact: '' },
