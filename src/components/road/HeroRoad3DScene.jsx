@@ -382,60 +382,6 @@ export default function HeroRoad3DScene() {
           }
         }
       });
-      // Attach high-definition Welcome signboards to gantry
-      const surveyBeaconsNode = tree.getObjectByName('Survey_Beacons');
-      if (surveyBeaconsNode && !surveyBeaconsNode.getObjectByName('Signboard_Overlay_Right_Front')) {
-        const signGeo = new THREE.PlaneGeometry(1.45, 0.42);
-        const signTex = new THREE.TextureLoader().load('/textures/gantry_sign_diffuse.png');
-        signTex.colorSpace = THREE.SRGBColorSpace;
-        const signOverlayMat = new THREE.MeshStandardMaterial({
-          map: signTex,
-          roughness: 0.28,
-          metalness: 0.05,
-          polygonOffset: true,
-          polygonOffsetFactor: -1.5,
-          polygonOffsetUnits: -1.5,
-        });
-
-        // 3D physical green signboard boxes on back (-X) side to eliminate beam clipping
-        const backSignBoxGeo = new THREE.BoxGeometry(0.08, 0.42, 1.45);
-        const backSignMat = bridgeMaterials?.gantrySign || new THREE.MeshStandardMaterial({ color: 0x1e6b37, roughness: 0.35 });
-
-        // Right board (-Z side, over forward-moving lanes where vehicles move under gantry)
-        const rightBackBox = new THREE.Mesh(backSignBoxGeo, backSignMat);
-        rightBackBox.position.set(-0.22, 1.98, -1.045);
-        rightBackBox.castShadow = true;
-        surveyBeaconsNode.add(rightBackBox);
-
-        // Right board front face (facing +X, over traffic moving into the scene)
-        const rightFront = new THREE.Mesh(signGeo, signOverlayMat);
-        rightFront.name = 'Signboard_Overlay_Right_Front';
-        rightFront.position.set(0.262, 1.98, -1.045);
-        rightFront.rotation.y = Math.PI / 2;
-        rightFront.receiveShadow = true;
-        surveyBeaconsNode.add(rightFront);
-
-        // Right board back face (facing -X, in front of the beam when viewed from back)
-        const rightBack = new THREE.Mesh(signGeo, signOverlayMat);
-        rightBack.name = 'Signboard_Overlay_Right_Back';
-        rightBack.position.set(-0.262, 1.98, -1.045);
-        rightBack.rotation.y = -Math.PI / 2;
-        rightBack.receiveShadow = true;
-        surveyBeaconsNode.add(rightBack);
-
-        // Left board (-X back face, facing oncoming traffic approaching from -X)
-        const leftBackBox = new THREE.Mesh(backSignBoxGeo, backSignMat);
-        leftBackBox.position.set(-0.22, 1.98, 1.045);
-        leftBackBox.castShadow = true;
-        surveyBeaconsNode.add(leftBackBox);
-
-        const leftBack = new THREE.Mesh(signGeo, signOverlayMat);
-        leftBack.name = 'Signboard_Overlay_Left_Back';
-        leftBack.position.set(-0.262, 1.98, 1.045);
-        leftBack.rotation.y = -Math.PI / 2;
-        leftBack.receiveShadow = true;
-        surveyBeaconsNode.add(leftBack);
-      }
 
       modelHolder.add(tree);
     };
