@@ -94,13 +94,6 @@ export const FOUR_PILLARS = [
 
 export const CAROUSEL_SLIDES = [
   {
-    src: '/images/hero-highway.png',
-    alt: 'Modern multi-lane highway corridor showing geometric alignment and lane markings',
-    title: 'Highway Corridor Engineering',
-    subtitle: 'Geometric design, overlay rehabilitation, and technical audits',
-    category: 'campus',
-  },
-  {
     src: '/images/rasta-reception-desk.jpg',
     alt: 'RASTA reception desk and main entrance at Peenya campus, Bengaluru',
     title: 'RASTA Administrative Center',
