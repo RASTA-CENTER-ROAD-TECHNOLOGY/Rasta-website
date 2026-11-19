@@ -355,17 +355,60 @@ export const ACADEMIC_PROGRAMS = [
 
 export const FACULTY_ROSTER = {
   leadership: [
-    { name: 'Dr. V. Ramachandra', role: 'Professor and Director - RASTA (Infrastructure Engineering & Management Division)', email: 'ramachandra@rastaindia.com' },
-    { name: 'Dr. G. Kavitha', role: 'Professor and Head of Institution (Highway Technology Division)', email: 'gkavitha@rastaindia.com' },
-    { name: 'Vijay Kumar M.', role: 'Chief Operating Officer (COO), RASTA', email: '' },
-    { name: 'Mr. P. M. Hiremath', role: 'Business Development Consultant', email: '' },
+    {
+      name: 'Dr. V. Ramachandra',
+      role: 'Professor and Director - RASTA (Infrastructure Engineering & Management Division)',
+      email: 'ramachandra@rastaindia.com',
+      image: '/images/faculty/dr-v-ramachandra.jpg',
+    },
+    {
+      name: 'Dr. G. Kavitha',
+      role: 'Professor and Head of Institution (Highway Technology Division)',
+      email: 'gkavitha@rastaindia.com',
+      image: '/images/faculty/dr-g-kavitha.jpg',
+    },
+    {
+      name: 'Vijay Kumar M.',
+      role: 'Chief Operating Officer (COO), RASTA',
+      email: '',
+      image: '/images/faculty/vijay-kumar-m.jpg',
+    },
+    {
+      name: 'Mr. P. M. Hiremath',
+      role: 'Business Development Consultant',
+      email: '',
+      image: '/images/faculty/mr-p-m-hiremath.jpg',
+    },
   ],
   teaching: [
-    { name: 'Dr. K. M. Mallesha', division: 'Highway Technology Division', role: 'Professor', email: 'kmm@rastaindia.com' },
-    { name: 'Dr. M. A. Jayaram', division: 'Infrastructure Engineering & Management Division', role: 'Professor', email: 'jayaram@rastaindia.com' },
-    { name: 'Dr. Jaya R.', division: 'Highway Technology Division', role: 'Associate Professor', email: 'jayars@rastaindia.com' },
-    { name: 'Dhruva Theja', division: 'Highway Technology Division', role: 'Assistant Professor', email: '' },
-    { name: 'Reshma E. K.', division: 'Highway Technology Division', role: 'Assistant Professor', email: '' },
+    {
+      name: 'Dr. K. M. Mallesha',
+      division: 'Highway Technology Division',
+      role: 'Professor',
+      email: 'kmm@rastaindia.com',
+      image: '/images/faculty/dr-k-m-mallesha.jpg',
+    },
+    {
+      name: 'Dr. M. A. Jayaram',
+      division: 'Infrastructure Engineering & Management Division',
+      role: 'Professor',
+      email: 'jayaram@rastaindia.com',
+      image: '/images/faculty/dr-m-a-jayaram.jpg',
+    },
+    {
+      name: 'Dhruva Theja',
+      division: 'Highway Technology Division',
+      role: 'Assistant Professor',
+      email: '',
+      image: '/images/faculty/dhruva-theja.jpg',
+    },
+    {
+      name: 'Dr. Reshma E. K.',
+      division: 'Highway Technology Division',
+      role: 'Assistant Professor',
+      email: '',
+      image: '/images/faculty/dr-reshma-e-k.jpg',
+    },
   ],
   guestFaculty: [
     { name: 'Dr. Gangaboraiah', role: 'Guest Faculty Professor' },

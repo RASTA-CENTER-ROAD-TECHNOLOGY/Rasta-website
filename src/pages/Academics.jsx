@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Mail } from 'lucide-react';
 import PageHeader from '../components/layout/PageHeader';
 import AnimatedContent from '../components/reactbits/AnimatedContent';
 import {
@@ -89,18 +90,31 @@ export default function Academics() {
             <h3 style={{ fontFamily: 'var(--font-serif)', marginBottom: '16px' }}>
               Institutional Leadership and Business Development
             </h3>
-            <div className="arch-grid arch-grid--4" style={{ marginBottom: '32px' }}>
+            <div className="arch-grid arch-grid--4" style={{ marginBottom: '40px' }}>
               {FACULTY_ROSTER.leadership.map((item) => (
-                <div key={item.name} className="arch-cell">
-                  <h4 className="arch-cell__title" style={{ fontSize: '17px' }}>
-                    {item.name}
-                  </h4>
-                  <p className="arch-cell__desc">{item.role}</p>
-                  {item.email && (
-                    <a href={`mailto:${item.email}`} className="arch-cell__link">
-                      {item.email}
-                    </a>
+                <div key={item.name} className="arch-cell arch-cell--faculty">
+                  {item.image && (
+                    <div className="faculty-card__media">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="faculty-card__img"
+                        loading="lazy"
+                      />
+                    </div>
                   )}
+                  <div className="faculty-card__body">
+                    <h4 className="arch-cell__title" style={{ fontSize: '17px' }}>
+                      {item.name}
+                    </h4>
+                    <p className="arch-cell__desc">{item.role}</p>
+                    {item.email && (
+                      <a href={`mailto:${item.email}`} className="arch-cell__link">
+                        <Mail size={14} aria-hidden="true" />
+                        <span>{item.email}</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -108,19 +122,32 @@ export default function Academics() {
             <h3 style={{ fontFamily: 'var(--font-serif)', marginBottom: '16px' }}>
               Full-Time Teaching Faculty
             </h3>
-            <div className="arch-grid arch-grid--3" style={{ marginBottom: '32px' }}>
+            <div className="arch-grid arch-grid--4" style={{ marginBottom: '40px' }}>
               {FACULTY_ROSTER.teaching.map((f) => (
-                <div key={f.name} className="arch-cell">
-                  <p className="arch-cell__sub">{f.division}</p>
-                  <h4 className="arch-cell__title" style={{ fontSize: '17px' }}>
-                    {f.name}
-                  </h4>
-                  <p className="arch-cell__desc">{f.role}</p>
-                  {f.email && (
-                    <a href={`mailto:${f.email}`} className="arch-cell__link">
-                      {f.email}
-                    </a>
+                <div key={f.name} className="arch-cell arch-cell--faculty">
+                  {f.image && (
+                    <div className="faculty-card__media">
+                      <img
+                        src={f.image}
+                        alt={f.name}
+                        className="faculty-card__img"
+                        loading="lazy"
+                      />
+                    </div>
                   )}
+                  <div className="faculty-card__body">
+                    <p className="arch-cell__sub">{f.division}</p>
+                    <h4 className="arch-cell__title" style={{ fontSize: '17px' }}>
+                      {f.name}
+                    </h4>
+                    <p className="arch-cell__desc">{f.role}</p>
+                    {f.email && (
+                      <a href={`mailto:${f.email}`} className="arch-cell__link">
+                        <Mail size={14} aria-hidden="true" />
+                        <span>{f.email}</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
